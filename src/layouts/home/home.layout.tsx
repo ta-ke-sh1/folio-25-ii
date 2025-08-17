@@ -9,6 +9,7 @@ import Contact from "../contact/contact.layout.tsx";
 import type {VideoDetails} from "./types/home.types.ts";
 import {ScrollTrigger} from "gsap/ScrollTrigger";
 import {textShuffleLight} from "../../animations/text/shuffle.ts";
+import About from "../about/about.layout.tsx";
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -127,40 +128,18 @@ export default function Homepage() {
     }
 
     // Instantiate scroll triggers
-    useEffect(() => {
-        document.querySelectorAll('.section').forEach((section, index) => {
-            // Add section
-            ScrollTrigger.create({
-                trigger: section,
-                start: 'center bottom',
-
-                onEnter: () => {
-                    gsap.to(titleRef.current, {
-                        y: `-${index * 4.5}vmin`,
-                        duration: 1,
-                        ease: 'power2'
-                    })
-                    gsap.to(dateRef.current, {
-                        y: `-${index * 4.5}vmin`,
-                        duration: 1,
-                        ease: 'power2'
-                    })
-                },
-                onEnterBack: () => {
-                    gsap.to(titleRef.current, {
-                        y: `-${index * 4.5}vmin`,
-                        duration: 1,
-                        ease: 'power2'
-                    })
-                    gsap.to(dateRef.current, {
-                        y: `-${index * 4.5}vmin`,
-                        duration: 1,
-                        ease: 'power2'
-                    })
-                },
-            })
+    function onMouseEnterVideoDiv(index: number) {
+        gsap.to(titleRef.current, {
+            y: `-${index * 4.5}vmin`,
+            duration: 1,
+            ease: 'power2'
         })
-    }, []);
+        gsap.to(dateRef.current, {
+            y: `-${index * 4.5}vmin`,
+            duration: 1,
+            ease: 'power2'
+        })
+    }
 
     return (
         <>
@@ -285,23 +264,29 @@ export default function Homepage() {
             <Stack gap={0}>
                 {
                     videoLists.map((videoList: VideoDetails, index: number) => (
-                        <video className={"section"} key={`banner-video-${videoList.id}-${index}`} id="banner-video"
-                               autoPlay muted
-                               playsInline loop
-                               style={{
-                                   width: '100dvw',
-                                   height: '105dvh',
-                                   objectFit: 'cover',
-                                   zIndex: 0,
-                                   cursor: 'pointer'
-                               }}>
+                        <video
+                            onMouseEnter={() => onMouseEnterVideoDiv(index)}
+                            id={`banner-video-${index}`} className={"section"}
+                            key={`banner-video-${videoList.id}-${index}`}
+                            autoPlay muted
+                            playsInline loop
+                            style={{
+                                width: '100dvw',
+                                height: '105dvh',
+                                objectFit: 'cover',
+                                zIndex: 0,
+                                cursor: 'pointer'
+                            }}>
                             <source src={videoList.url} type="video/webm"/>
                             Your browser does not support the video tag.
                         </video>
                     ))
                 }
-                <Contact/>
             </Stack>
+            {/*About container*/}
+            <About/>
+            {/*Contact container*/}
+            <Contact/>
         </>
     )
 }
