@@ -1,21 +1,10 @@
 import {Stack, Text} from "@mantine/core";
 import {timestamp_log} from "../../utils/log.ts";
 import gsap from "gsap";
-import {useEffect, useRef} from "react";
+import {useEffect, useRef, useState} from "react";
 import {useSystemStore} from "../../hooks/system_state.ts";
 import {HeaderHeight} from "../../enum/sizing.ts";
-import StringTune from "@fiddle-digital/string-tune";
-import Contact from "../contact/contact.layout.tsx";
 import type {VideoDetails} from "./types/home.types.ts";
-import {ScrollTrigger} from "gsap/ScrollTrigger";
-import {textShuffleLight} from "../../animations/text/shuffle.ts";
-import About from "../about/about.layout.tsx";
-
-gsap.registerPlugin(ScrollTrigger)
-
-// Configure smooth scroll
-const stringTune = StringTune.getInstance();
-stringTune.start(60); // Start with 60 FPS
 
 const videoLists: VideoDetails[] = [
     {
@@ -42,6 +31,9 @@ const videoLists: VideoDetails[] = [
 ]
 
 export default function Homepage() {
+    const [currentIndex, setCurrentIndex] = useState(0);
+
+    const mainStackRef = useRef<HTMLDivElement>(null);
 
     // Cursor ref list
     const cursorRef = useRef<HTMLDivElement>(null);
@@ -57,6 +49,13 @@ export default function Homepage() {
     const cursorSize = 6
     const easeType = "power3"
     const mouseDuration = 0.6
+
+    useEffect(() => {
+        const video = document.getElementById(`banner-video-${currentIndex}`) as HTMLVideoElement;
+        if (video) {
+            video.play()
+        }
+    }, [currentIndex]);
 
     // Instantiate cursor events
     useEffect(() => {
@@ -82,17 +81,15 @@ export default function Homepage() {
         })
 
         window.addEventListener('mousemove', handleMouseMove)
-        window.addEventListener('mouseout', handleMouseLeave)
 
         // Clean up listener
         return () => {
             window.removeEventListener('mousemove', handleMouseMove)
-            window.removeEventListener('mouseout', handleMouseLeave)
         }
+
     }, [systemState])
 
     function handleMouseMove(event: MouseEvent) {
-
         // Move both x & y if cursor has not reached navigation bar yet
         if (event.clientY > 120) {
             gsap.to(cursorRef.current, {
@@ -123,22 +120,61 @@ export default function Homepage() {
         })
     }
 
-    function handleMouseLeave() {
-        // timestamp_log('mouse leave')
-    }
 
     // Instantiate scroll triggers
     function onMouseEnterVideoDiv(index: number) {
         gsap.to(titleRef.current, {
             y: `-${index * 4.5}vmin`,
             duration: 1,
-            ease: 'power2'
+            ease: 'sine.out'
         })
         gsap.to(dateRef.current, {
             y: `-${index * 4.5}vmin`,
             duration: 1,
-            ease: 'power2'
+            ease: 'sine.out'
         })
+    }
+
+    function handleSelectIndex(index: number) {
+        const oldIndex = currentIndex
+        const nextVideo = document.getElementById(`banner-video-${index}`) as HTMLVideoElement;
+        if (nextVideo) {
+            nextVideo.currentTime = 0
+        }
+
+        if (index !== currentIndex) {
+            onMouseEnterVideoDiv(index)
+            gsap.to(mainStackRef.current, {
+                y: `-${100 * index}dvh`,
+                ease: 'power3',
+                duration: 1,
+            })
+            setCurrentIndex(index)
+        }
+
+        if (nextVideo) {
+            nextVideo.play()
+        }
+
+        const currentVideo = document.getElementById(`banner-video-${oldIndex}`) as HTMLVideoElement;
+        if (currentVideo) {
+            currentVideo.currentTime = 0
+        }
+    }
+
+    function handleEnded() {
+        console.log(`on ended ${currentIndex}`)
+        switch (currentIndex) {
+            case 0:
+                handleSelectIndex(1)
+                break
+            case 1:
+                handleSelectIndex(2)
+                break
+            case 2:
+                handleSelectIndex(0)
+                break
+        }
     }
 
     return (
@@ -146,7 +182,7 @@ export default function Homepage() {
             {/*Cursor item*/}
             <div ref={cursorRef} style={{
                 position: "fixed",
-                backgroundColor: 'red',
+                backgroundColor: '#e03131',
                 pointerEvents: 'none',
                 height: `${cursorSize}px`,
                 width: `${cursorSize}px`,
@@ -180,7 +216,7 @@ export default function Homepage() {
                     <div style={{
                         height: `${cursorSize}px`,
                         width: `${cursorSize}px`,
-                        backgroundColor: 'red',
+                        backgroundColor: '#e03131',
                         transform: `translateX(-${cursorSize / 2}px)`,
                     }}></div>
                 </div>
@@ -217,7 +253,6 @@ export default function Homepage() {
                         }
                     </div>
                 </Stack>
-
             </Stack>
             <Stack align={'end'} gap={0} style={{
                 position: 'fixed',
@@ -243,6 +278,27 @@ export default function Homepage() {
                 </Stack>
             </Stack>
 
+            <Stack align={'end'} gap={5} style={{
+                position: 'fixed',
+                top: '50%',
+                right: 25,
+                transform: 'translateY(-50%)',
+                width: '100px',
+                zIndex: 100
+            }}>
+                {
+                    videoLists.map((video: VideoDetails, index: number) => (
+                        <div onClick={() => handleSelectIndex(index)} key={`video-${video.title}-${index}-thumbnail`}
+                             style={{
+                                 width: '10dvw',
+                                 minWidth: '100px',
+                                 height: '50px',
+                                 backgroundColor: '#e03131'
+                             }}></div>
+                    ))
+                }
+            </Stack>
+
             {/*Hero text*/}
             <Text style={{
                 position: 'fixed',
@@ -257,36 +313,51 @@ export default function Homepage() {
                 width: '40%',
                 zIndex: 1
             }}>
-                WHERE DOES A BORING<span style={{color: 'red'}}>.</span> DEVELOPER ESCAPES?
+                WHERE DOES A BORING<span style={{color: '#e03131'}}>.</span> DEVELOPER ESCAPES?
             </Text>
 
             {/*Main stack item*/}
-            <Stack gap={0}>
-                {
-                    videoLists.map((videoList: VideoDetails, index: number) => (
-                        <video
-                            onMouseEnter={() => onMouseEnterVideoDiv(index)}
-                            id={`banner-video-${index}`} className={"section"}
-                            key={`banner-video-${videoList.id}-${index}`}
-                            autoPlay muted
-                            playsInline loop
-                            style={{
-                                width: '100dvw',
-                                height: '105dvh',
-                                objectFit: 'cover',
-                                zIndex: 0,
-                                cursor: 'pointer'
-                            }}>
-                            <source src={videoList.url} type="video/webm"/>
-                            Your browser does not support the video tag.
-                        </video>
-                    ))
-                }
+            <Stack gap={0} style={{
+                position: 'fixed',
+                left: 0,
+                top: 0,
+                height: '100dvh',
+                width: '100dvw',
+                overflow: 'hidden',
+            }}>
+                <div style={{
+                    position: 'relative',
+                    height: '100%',
+                    width: '100%'
+                }}>
+                    <Stack ref={mainStackRef} gap={0} style={{
+                        position: 'absolute',
+                        left: 0,
+                        top: 0,
+                    }}>
+                        {
+                            videoLists.map((videoList: VideoDetails, index: number) => (
+                                <video
+                                    id={`banner-video-${index}`} className={"section"}
+                                    key={`banner-video-${videoList.id}-${index}`}
+                                    muted
+                                    onEnded={handleEnded}
+                                    playsInline
+                                    style={{
+                                        minWidth: '100dvw',
+                                        height: '100dvh',
+                                        objectFit: 'cover',
+                                        zIndex: 0,
+                                        cursor: 'pointer'
+                                    }}>
+                                    <source src={videoList.url} type="video/webm"/>
+                                    Your browser does not support the video tag.
+                                </video>
+                            ))
+                        }
+                    </Stack>
+                </div>
             </Stack>
-            {/*About container*/}
-            <About/>
-            {/*Contact container*/}
-            <Contact/>
         </>
     )
 }

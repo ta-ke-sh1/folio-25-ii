@@ -1,38 +1,48 @@
-import {Grid, Text} from "@mantine/core";
-import {textShuffleLight} from "../../animations/text/shuffle.ts";
+import {Grid} from "@mantine/core";
+
+const cursorSize = 6
 
 export default function About() {
     return (
         <div style={{
-            height: '100dvh',
             width: '100dvw',
             backgroundColor: '#363636',
             zIndex: 10,
             position: 'relative',
         }}>
             <Grid>
+                <div style={{
+                    top: 0,
+                    position: "absolute",
+                    left: '75px',
+                    height: '100%',
+                    pointerEvents: 'none',
+                    width: '1px',
+                    backgroundColor: 'rgba(255,255,255,0.3)',
+                    zIndex: 1
+                }}>
+                </div>
                 <Grid.Col span={{base: 12, md: 6}}>
 
                 </Grid.Col>
-                <Grid.Col span={{base: 12, md: 6}}>
-                    <div style={{marginTop: '30dvh', width: '100%'}} onMouseEnter={() => {
-                        const element = document.getElementById("firstText");
-                        textShuffleLight(element, "dreamt of an escape from the daily 9-to-5. ", null, 20)
-                    }} onMouseLeave={() => {
-                        const element = document.getElementById("firstText");
-                        textShuffleLight(element, "wanted to be the best on my field!", null, 20)
+                <Grid.Col span={{base: 12, md: 6}} p={"xl"}>
+                    <div style={{
+                        marginTop: '5dvh',
+                        width: '80%',
+                        color: 'white',
+                        fontSize: '30px',
+                        lineHeight: '35px',
                     }}>
-                        <Text>
-                            <span style={{color: 'white', fontSize: 18}}>
-                                Being a developer, I have always
-                            </span>
-                            {" "}
-                            <span
-                                style={{color: 'white', fontSize: 18}}
-                                id={"firstText"}>
-                                wanted to be the best on my field!
-                            </span>
-                        </Text>
+                        Born from the pulse of precision and innovation, Trung Ha emerged from the engineering halls of
+                        Toshiba Software Development Vietnam, where three years of relentless coding shaped a developer
+                        fluent in both logic and artistry. Now charting his own path, Trung crafts digital experiences
+                        that blur the line between function and feeling.
+                        <br/>
+                        <br/>
+                        But Trung doesn’t stop at the screen. He’s also behind the lens—capturing moments, framing
+                        stories, and crafting visuals that speak louder than words. His photography and video work bring
+                        texture to his technical world, adding depth, emotion, and a cinematic edge to his digital
+                        craft.
                     </div>
                 </Grid.Col>
             </Grid>
