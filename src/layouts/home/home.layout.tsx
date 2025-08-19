@@ -1,10 +1,12 @@
 import {Stack, Text} from "@mantine/core";
-import {timestamp_log} from "../../utils/log.ts";
 import gsap from "gsap";
 import {useEffect, useRef, useState} from "react";
 import {useSystemStore} from "../../hooks/system_state.ts";
-import {HeaderHeight} from "../../enum/sizing.ts";
+import {HeaderHeight, ZIndexLevel} from "../../enum/sizing.ts";
 import type {VideoDetails} from "./types/home.types.ts";
+import {mainColors} from "../../enum/colors.ts";
+import {DeviceType} from "../../enum/system_state.ts";
+import Contact from "../contact/contact.layout.tsx";
 
 const videoLists: VideoDetails[] = [
     {
@@ -31,6 +33,8 @@ const videoLists: VideoDetails[] = [
 ]
 
 export default function Homepage() {
+    const {deviceType} = useSystemStore()
+
     const [currentIndex, setCurrentIndex] = useState(0);
 
     const mainStackRef = useRef<HTMLDivElement>(null);
@@ -59,35 +63,49 @@ export default function Homepage() {
 
     // Instantiate cursor events
     useEffect(() => {
-        timestamp_log('re-render cursor');
-
         const centerX = window.innerWidth / 2
         const centerY = window.innerHeight / 2
 
-        gsap.set(cursorRef.current, {
-            x: centerX - cursorSize / 2,
-            y: centerY - cursorSize / 2,
-            duration: 0
-        })
+        if (deviceType === DeviceType.MOBILE) {
+            gsap.set(cursorRef.current, {
+                x: 35 - cursorSize / 2,
+                y: centerY - cursorSize / 2,
+                duration: 0
+            })
 
-        gsap.to(verticalRef.current, {
-            x: centerX,
-            duration: 0
-        })
+            gsap.to(verticalRef.current, {
+                x: 35,
+                duration: 0
+            })
 
-        gsap.to(horizontalRef.current, {
-            y: centerY,
-            duration: 0
-        })
+        } else {
 
-        window.addEventListener('mousemove', handleMouseMove)
 
-        // Clean up listener
-        return () => {
-            window.removeEventListener('mousemove', handleMouseMove)
+            gsap.set(cursorRef.current, {
+                x: centerX - cursorSize / 2,
+                y: centerY - cursorSize / 2,
+                duration: 0
+            })
+
+            gsap.to(verticalRef.current, {
+                x: centerX,
+                duration: 0
+            })
+
+            gsap.to(horizontalRef.current, {
+                y: centerY,
+                duration: 0
+            })
+
+            window.addEventListener('mousemove', handleMouseMove)
+
+            // Clean up listener
+            return () => {
+                window.removeEventListener('mousemove', handleMouseMove)
+            }
         }
 
-    }, [systemState])
+    }, [systemState, deviceType])
 
     function handleMouseMove(event: MouseEvent) {
         // Move both x & y if cursor has not reached navigation bar yet
@@ -146,8 +164,7 @@ export default function Homepage() {
             onMouseEnterVideoDiv(index)
             gsap.to(mainStackRef.current, {
                 y: `-${100 * index}dvh`,
-                ease: 'power3',
-                duration: 1,
+                duration: 0,
             })
             setCurrentIndex(index)
         }
@@ -177,6 +194,16 @@ export default function Homepage() {
         }
     }
 
+    function onCursorEnterThumbnail() {
+        const text = document.getElementById('cursor-helperText')!
+        text.innerHTML = 'Next Item'
+    }
+
+    function onCursorLeaveThumbnail() {
+        const text = document.getElementById('cursor-helperText')!
+        text.innerHTML = 'Click to View'
+    }
+
     return (
         <>
             {/*Cursor item*/}
@@ -187,16 +214,18 @@ export default function Homepage() {
                 height: `${cursorSize}px`,
                 width: `${cursorSize}px`,
                 transform: `translate(${cursorSize}px, ${cursorSize}px)`,
-                zIndex: 10
+                zIndex: ZIndexLevel.high
             }}>
                 <div style={{position: 'relative', width: '400px'}}>
-                    <div style={{
+                    <div id={'cursor-helperText'} style={{
                         position: 'absolute',
-                        top: -30,
-                        left: 20,
-                        color: 'white'
+                        top: -25,
+                        left: 12,
+                        color: 'white',
+                        userSelect: 'none',
+                        pointerEvents: 'none',
                     }}>
-                        View on Instagram
+                        Click to View
                     </div>
                 </div>
             </div>
@@ -207,7 +236,7 @@ export default function Homepage() {
                 width: '1px',
                 backgroundColor: 'rgba(255,255,255,0.3)',
                 top: `${HeaderHeight}`,
-                zIndex: 1
+                zIndex: ZIndexLevel.high,
             }}>
                 <div style={{
                     position: 'relative',
@@ -226,7 +255,7 @@ export default function Homepage() {
                 width: '100dvw',
                 height: '1px',
                 pointerEvents: 'none',
-                zIndex: 1,
+                zIndex: ZIndexLevel.high,
                 backgroundColor: 'rgba(255,255,255,0.3)',
             }}></div>
 
@@ -235,11 +264,11 @@ export default function Homepage() {
                 position: 'fixed',
                 top: 100,
                 right: 25,
-                width: '40vw',
+                width: '100%',
                 zIndex: 1
             }}>
-                <Stack style={{position: 'relative', height: '5vmin', overflow: 'hidden', width: '100%'}}>
-                    <div ref={titleRef} style={{position: 'absolute', top: 0, right: 0, width: '40vw'}}>
+                <Stack style={{position: 'relative', height: '4.5vmin', overflow: 'hidden', width: '100%'}}>
+                    <div ref={titleRef} style={{position: 'absolute', top: 0, right: 0, width: '100%'}}>
                         {
                             videoLists.map((video: VideoDetails) => (
                                 <Text key={`title-text-${video.title}`} style={{
@@ -278,23 +307,31 @@ export default function Homepage() {
                 </Stack>
             </Stack>
 
-            <Stack align={'end'} gap={5} style={{
+            <Stack align={'end'} gap={0} style={{
                 position: 'fixed',
                 top: '50%',
                 right: 25,
                 transform: 'translateY(-50%)',
                 width: '100px',
-                zIndex: 100
+                zIndex: ZIndexLevel.medium
             }}>
                 {
                     videoLists.map((video: VideoDetails, index: number) => (
-                        <div onClick={() => handleSelectIndex(index)} key={`video-${video.title}-${index}-thumbnail`}
-                             style={{
-                                 width: '10dvw',
-                                 minWidth: '100px',
-                                 height: '50px',
-                                 backgroundColor: '#e03131'
-                             }}></div>
+                        <div
+                            onMouseEnter={onCursorEnterThumbnail}
+                            onMouseLeave={onCursorLeaveThumbnail}
+                            onClick={() => handleSelectIndex(index)} key={`video-${video.title}-${index}-thumbnail`}
+                            style={{
+                                cursor: 'pointer',
+                                borderLeft: `4px solid ${mainColors[index + 1]}`,
+                                width: '15dvw',
+                                minWidth: '100px',
+                                height: '10dvh',
+                                backgroundImage: `url(/thumbnail-${index + 1}.jpg)`,
+                                backgroundSize: 'cover',
+                                backgroundPosition: 'center center',
+                                filter: `grayscale(${currentIndex === index ? 0 : 1})`
+                            }}></div>
                     ))
                 }
             </Stack>
@@ -307,7 +344,7 @@ export default function Homepage() {
                 color: 'white',
                 bottom: 25,
                 left: 25,
-                letterSpacing: -4,
+                letterSpacing: -2,
                 fontWeight: 700,
                 userSelect: 'none',
                 width: '40%',
@@ -347,8 +384,10 @@ export default function Homepage() {
                                         minWidth: '100dvw',
                                         height: '100dvh',
                                         objectFit: 'cover',
+                                        objectPosition: 'center',
                                         zIndex: 0,
-                                        cursor: 'pointer'
+                                        cursor: 'pointer',
+                                        filter: 'grayscale(100%)',
                                     }}>
                                     <source src={videoList.url} type="video/webm"/>
                                     Your browser does not support the video tag.
@@ -358,6 +397,8 @@ export default function Homepage() {
                     </Stack>
                 </div>
             </Stack>
+            
+            <Contact/>
         </>
     )
 }

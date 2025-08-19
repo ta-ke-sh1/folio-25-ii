@@ -1,14 +1,16 @@
 import {Grid} from "@mantine/core";
-
-const cursorSize = 6
+import {ZIndexLevel} from "../../enum/sizing.ts";
 
 export default function About() {
     return (
         <div style={{
-            width: '100dvw',
+            width: '50dvw',
+            height: '50dvh',
             backgroundColor: '#363636',
-            zIndex: 10,
-            position: 'relative',
+            zIndex: ZIndexLevel.medium,
+            position: 'fixed',
+            left: 0,
+            top: 0,
         }}>
             <Grid>
                 <div style={{

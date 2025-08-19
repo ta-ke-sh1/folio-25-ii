@@ -8,6 +8,7 @@ import {MantineProvider} from "@mantine/core";
 import Cursor from "./components/cursor/cursor.tsx";
 import Navigation from "./components/navigation/navigation.tsx";
 import "@fontsource-variable/geist/wght.css";
+// import {Preloader} from "./components/preloader/preloader.tsx";
 
 createRoot(document.getElementById('root')!).render(
     <StrictMode>
@@ -15,6 +16,7 @@ createRoot(document.getElementById('root')!).render(
             <MantineProvider theme={{
                 fontFamily: 'Geist Variable'
             }}>
+                {/*<Preloader />*/}
                 <Navigation/>
                 <App/>
                 <Cursor/>
