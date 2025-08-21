@@ -2,7 +2,7 @@ import {Stack, Text} from "@mantine/core";
 import gsap from "gsap";
 import {useEffect, useRef, useState} from "react";
 import {useSystemStore} from "../../hooks/system_state.ts";
-import {HeaderHeight, ZIndexLevel} from "../../enum/sizing.ts";
+import {ZIndexLevel} from "../../enum/sizing.ts";
 import type {VideoDetails} from "./types/home.types.ts";
 import {mainColors} from "../../enum/colors.ts";
 import {DeviceType} from "../../enum/system_state.ts";
@@ -41,8 +41,6 @@ export default function Homepage() {
 
     // Cursor ref list
     const cursorRef = useRef<HTMLDivElement>(null);
-    const horizontalRef = useRef<HTMLDivElement>(null);
-    const verticalRef = useRef<HTMLDivElement>(null);
 
     // Title ref list
     const titleRef = useRef<HTMLDivElement>(null)
@@ -72,33 +70,14 @@ export default function Homepage() {
                 y: centerY - cursorSize / 2,
                 duration: 0
             })
-
-            gsap.to(verticalRef.current, {
-                x: 35,
-                duration: 0
-            })
-
         } else {
-
-
             gsap.set(cursorRef.current, {
                 x: centerX - cursorSize / 2,
                 y: centerY - cursorSize / 2,
                 duration: 0
             })
 
-            gsap.to(verticalRef.current, {
-                x: centerX,
-                duration: 0
-            })
-
-            gsap.to(horizontalRef.current, {
-                y: centerY,
-                duration: 0
-            })
-
             window.addEventListener('mousemove', handleMouseMove)
-
             // Clean up listener
             return () => {
                 window.removeEventListener('mousemove', handleMouseMove)
@@ -109,30 +88,9 @@ export default function Homepage() {
 
     function handleMouseMove(event: MouseEvent) {
         // Move both x & y if cursor has not reached navigation bar yet
-        if (event.clientY > 120) {
-            gsap.to(cursorRef.current, {
-                x: event.clientX - cursorSize / 2,
-                y: event.clientY - cursorSize / 2,
-                duration: mouseDuration,
-                ease: easeType,
-            })
-
-            gsap.to(horizontalRef.current, {
-                y: event.clientY,
-                duration: mouseDuration,
-                ease: easeType,
-            })
-        } else {
-            // Move only x & y if cursor has reached navigation bar
-            gsap.to(cursorRef.current, {
-                x: event.clientX - cursorSize / 2,
-                duration: mouseDuration,
-                ease: easeType,
-            })
-        }
-
-        gsap.to(verticalRef.current, {
-            x: event.clientX,
+        gsap.to(cursorRef.current, {
+            x: event.clientX - cursorSize / 2,
+            y: event.clientY - cursorSize / 2,
             duration: mouseDuration,
             ease: easeType,
         })
@@ -229,35 +187,6 @@ export default function Homepage() {
                     </div>
                 </div>
             </div>
-            <div ref={verticalRef} style={{
-                position: "fixed",
-                height: '100dvh',
-                pointerEvents: 'none',
-                width: '1px',
-                backgroundColor: 'rgba(255,255,255,0.3)',
-                top: `${HeaderHeight}`,
-                zIndex: ZIndexLevel.high,
-            }}>
-                <div style={{
-                    position: 'relative',
-                    height: '100%'
-                }}>
-                    <div style={{
-                        height: `${cursorSize}px`,
-                        width: `${cursorSize}px`,
-                        backgroundColor: '#e03131',
-                        transform: `translateX(-${cursorSize / 2}px)`,
-                    }}></div>
-                </div>
-            </div>
-            <div ref={horizontalRef} style={{
-                position: "fixed",
-                width: '100dvw',
-                height: '1px',
-                pointerEvents: 'none',
-                zIndex: ZIndexLevel.high,
-                backgroundColor: 'rgba(255,255,255,0.3)',
-            }}></div>
 
             {/*Title text*/}
             <Stack align={'end'} gap={0} style={{
@@ -306,7 +235,6 @@ export default function Homepage() {
                     </div>
                 </Stack>
             </Stack>
-
             <Stack align={'end'} gap={0} style={{
                 position: 'fixed',
                 top: '50%',
@@ -397,8 +325,6 @@ export default function Homepage() {
                     </Stack>
                 </div>
             </Stack>
-            
-            <Contact/>
         </>
     )
 }

@@ -4,10 +4,9 @@ import {useSystemStore} from "../../hooks/system_state.ts";
 import {DeviceType} from "../../enum/system_state.ts";
 import {useDisclosure} from "@mantine/hooks";
 import gsap from "gsap";
-import {textShuffleLight} from "../../animations/text/shuffle.ts";
 import {ZIndexLevel} from "../../enum/sizing.ts";
-import {mainColors} from "../../enum/colors.ts";
-import {ArrowSVG, BurgerSVG, XMarkSVG} from "../icons/icons.tsx";
+import {BurgerSVG, XMarkSVG} from "../icons/icons.tsx";
+import Contact from "../../layouts/contact/contact.layout.tsx";
 
 export default function Navigation() {
 
@@ -68,7 +67,7 @@ export default function Navigation() {
                 position: 'fixed',
                 top: '20px',
                 right: '20px',
-                zIndex: ZIndexLevel.highest + 1
+                zIndex: ZIndexLevel.high + 1
             }}>
                 {
                     opened ? <XMarkSVG stroke={'white'}/> : <BurgerSVG/>
@@ -81,7 +80,7 @@ export default function Navigation() {
                 position: 'fixed',
                 top: 0,
                 left: 0,
-                zIndex: ZIndexLevel.highest
+                zIndex: ZIndexLevel.medium
             }}>
                 <Group pr={"lg"} pl={"lg"} justify={'space-between'} style={{
                     height: '100%',
@@ -98,6 +97,9 @@ export default function Navigation() {
                     }
                 </Group>
             </div>
+            {
+                opened && <Contact/>
+            }
         </>
     )
 }
