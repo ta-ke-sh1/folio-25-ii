@@ -7,6 +7,7 @@ import type {VideoDetails} from "./types/home.types.ts";
 import {mainColors} from "../../enum/colors.ts";
 import {DeviceType} from "../../enum/system_state.ts";
 import Contact from "../contact/contact.layout.tsx";
+import {textShuffleLight} from "../../animations/text/shuffle.ts";
 
 const videoLists: VideoDetails[] = [
     {
@@ -53,10 +54,13 @@ export default function Homepage() {
     const mouseDuration = 0.6
 
     useEffect(() => {
-        const video = document.getElementById(`banner-video-${currentIndex}`) as HTMLVideoElement;
-        if (video) {
-            video.play()
-        }
+        setTimeout(() => {
+            const video = document.getElementById(`banner-video-${currentIndex}`) as HTMLVideoElement;
+            if (video) {
+                video.play()
+            }
+
+        }, 3500)
     }, [currentIndex]);
 
     // Instantiate cursor events
@@ -95,7 +99,6 @@ export default function Homepage() {
             ease: easeType,
         })
     }
-
 
     // Instantiate scroll triggers
     function onMouseEnterVideoDiv(index: number) {
@@ -265,7 +268,7 @@ export default function Homepage() {
             </Stack>
 
             {/*Hero text*/}
-            <Text style={{
+            <Text id={'hero-text'} style={{
                 position: 'fixed',
                 lineHeight: '10vmin',
                 fontSize: '12vmin',
