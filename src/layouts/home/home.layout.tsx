@@ -292,7 +292,7 @@ export default function Homepage() {
                 width: '40%',
                 zIndex: 1
             }}>
-                WHERE DOES A BORING<span style={{color: '#e03131'}}>.</span> DEVELOPER ESCAPES?
+                WHERE DOES A BORING<span style={{color: '#e03131'}}>.</span> DEVELOPER ESCAPE?
             </Text>
 
             {/*Main stack item*/}
