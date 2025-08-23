@@ -22,7 +22,7 @@ export default function Contact() {
     useEffect(() => {
         intervalRef.current = setInterval(() => {
             setCurrentIndex(prev => (prev < 8 ? prev + 1 : 0));
-        }, 400);
+        }, 700);
 
         return () => clearInterval(Number(intervalRef.current));
     }, []);
@@ -104,7 +104,7 @@ export default function Contact() {
         textShuffleLight(textElement, navItems[index], null, 50)
 
         const cursorText = document.getElementById('cursor-helperText')!
-        cursorText.innerHTML = data ?? '[Click to Access]'
+        cursorText.innerHTML = data ?? '[👆 ACCESS]'
 
         gsap.to(arrowElement, {
             rotation: 45,
@@ -117,7 +117,7 @@ export default function Contact() {
         const arrow = document.getElementById(`nav-arrow-${index}`)!
 
         const cursorText = document.getElementById('cursor-helperText')!
-        cursorText.innerHTML = '[TRUNG. HA]'
+        cursorText.innerHTML = '[🙋‍♂️ TRUNG. HA]'
 
         gsap.to(arrow, {
             rotation: 0,
@@ -227,14 +227,15 @@ export default function Contact() {
                                 <Group justify={'space-between'}
                                        onMouseDown={() => handleMouseClickLink(0)}
                                        onMouseLeave={() => handleMouseExitLink(0)}
-                                       onMouseEnter={() => handleMouseEnterLink(0, "[DROP A FOLLOW]")}
+                                       onMouseEnter={() => handleMouseEnterLink(0, "[❤️ DROP A FOLLOW]")}
                                        style={{
                                            cursor: 'pointer',
                                            ...commonStyle,
                                        }}>
                                     <Group>
                                         <div id={'nav-link-0'} style={{
-                                            color: '#ECEEDF'
+                                            color: '#ECEEDF',
+                                            textDecoration: 'underline'
                                         }}>
                                             INSTAGRAM
                                         </div>
@@ -247,14 +248,15 @@ export default function Contact() {
                                     onMouseDown={() => handleMouseClickLink(1)}
                                     onMouseLeave={() => handleMouseExitLink(1)}
                                     justify={'space-between'}
-                                    onMouseEnter={() => handleMouseEnterLink(1, "[WANNA BE FRIENDS?]")}
+                                    onMouseEnter={() => handleMouseEnterLink(1, "[👬 WANNA BE FRIENDS?]")}
                                     style={{
                                         cursor: 'pointer',
                                         ...commonStyle
                                     }}>
                                     <Group>
                                         <div id={'nav-link-1'} style={{
-                                            color: '#ECEEDF'
+                                            color: '#ECEEDF',
+                                            textDecoration: 'underline'
                                         }}>
                                             FACEBOOK
                                         </div>
@@ -278,7 +280,7 @@ export default function Contact() {
                                     onMouseDown={() => handleMouseClickLink(3)}
                                     onMouseLeave={() => handleMouseExitLink(3)}
                                     justify={'space-between'}
-                                    onMouseEnter={() => handleMouseEnterLink(3, "[UNAVAILABLE AFTER 6]")}
+                                    onMouseEnter={() => handleMouseEnterLink(3, "[📞 UNAVAILABLE AFTER 6]")}
                                     style={{
                                         cursor: 'pointer',
                                         ...commonStyle
@@ -294,14 +296,15 @@ export default function Contact() {
                                 <Group justify={'space-between'}
                                        onMouseDown={() => handleMouseClickLink(2)}
                                        onMouseLeave={() => handleMouseExitLink(2)}
-                                       onMouseEnter={() => handleMouseEnterLink(2, "[SOMETHING FORMAL?]")}
+                                       onMouseEnter={() => handleMouseEnterLink(2, "[✉️ SOMETHING FORMAL?]")}
                                        style={{
                                            cursor: 'pointer',
                                            ...commonStyle,
                                        }}>
                                     <Group>
                                         <div id={'nav-link-2'} style={{
-                                            color: '#ECEEDF'
+                                            color: '#ECEEDF',
+                                            textDecoration: 'underline'
                                         }}>
                                             EMAIL
                                         </div>

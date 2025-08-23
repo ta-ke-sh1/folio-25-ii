@@ -62,7 +62,7 @@ export default function Navigation() {
 
     function handleMouseEnterNav() {
         const text = document.getElementById('cursor-helperText')!
-        text.innerHTML = '[TRUNG. HA]'
+        text.innerHTML = '[🙋‍♂️ TRUNG. HA]'
     }
 
 
@@ -70,12 +70,16 @@ export default function Navigation() {
         <>
             <div onClick={handleMenu} style={{
                 position: 'fixed',
-                top: '25px',
+                top: '28px',
                 right: '20px',
                 zIndex: ZIndexLevel.high + 1
             }}>
                 {
-                    opened ? <XMarkSVG stroke={'white'}/> : <BurgerSVG/>
+                    opened ? <XMarkSVG stroke={'white'}/> : <Text style={{
+                        textDecoration: 'underline',
+                        color: 'white',
+                        cursor: 'pointer',
+                    }}>INFO</Text>
                 }
             </div>
             <div onMouseEnter={handleMouseEnterNav} style={{

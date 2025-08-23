@@ -155,17 +155,17 @@ export default function Homepage() {
 
     function onCursorEnterThumbnail() {
         const text = document.getElementById('cursor-helperText')!
-        text.innerHTML = '[Next Item]'
+        text.innerHTML = '[👆 SELECT MEMORY ITEM]'
     }
 
     function onCursorLeaveThumbnail() {
         const text = document.getElementById('cursor-helperText')!
-        text.innerHTML = '[Click to View]'
+        text.innerHTML = '[ ▶ VIEW FULL REELS]'
     }
 
     function handleMouseEnterMainDiv() {
         const text = document.getElementById('cursor-helperText')!
-        text.innerHTML = '[Click to View]'
+        text.innerHTML = '[ ▶ VIEW FULL REELS]'
     }
 
     return (
@@ -190,7 +190,7 @@ export default function Homepage() {
                             userSelect: 'none',
                             pointerEvents: 'none',
                         }}>
-                            [Click to View]
+                            [👆 SELECT MEMORY ITEM]
                         </div>
                     </div>
                 </div>
