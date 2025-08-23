@@ -13,7 +13,7 @@ interface RouteData {
 const routes: RouteData[] = [
     {
         name: "home",
-        path: "/",
+        path: "*",
         element: <Homepage/>
     },
 ]
@@ -30,7 +30,7 @@ function App() {
     }, []);
 
     function resizeHandler() {
-        // window.location.reload()
+        window.location.reload()
     }
 
     useEffect(() => {
