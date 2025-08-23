@@ -70,7 +70,7 @@ export default function Navigation() {
         <>
             <div onClick={handleMenu} style={{
                 position: 'fixed',
-                top: '20px',
+                top: '25px',
                 right: '20px',
                 zIndex: ZIndexLevel.high + 1
             }}>

@@ -63,27 +63,23 @@ export default function Homepage() {
 
     // Instantiate cursor events
     useEffect(() => {
+        if (deviceType === DeviceType.MOBILE) {
+            return
+        }
+
         const centerX = window.innerWidth / 2
         const centerY = window.innerHeight / 2
 
-        if (deviceType === DeviceType.MOBILE) {
-            gsap.set(cursorRef.current, {
-                x: 35 - cursorSize / 2,
-                y: centerY - cursorSize / 2,
-                duration: 0
-            })
-        } else {
-            gsap.set(cursorRef.current, {
-                x: centerX - cursorSize / 2,
-                y: centerY - cursorSize / 2,
-                duration: 0
-            })
+        gsap.set(cursorRef.current, {
+            x: centerX - cursorSize / 2,
+            y: centerY - cursorSize / 2,
+            duration: 0
+        })
 
-            window.addEventListener('mousemove', handleMouseMove)
-            // Clean up listener
-            return () => {
-                window.removeEventListener('mousemove', handleMouseMove)
-            }
+        window.addEventListener('mousemove', handleMouseMove)
+
+        return () => {
+            window.removeEventListener('mousemove', handleMouseMove)
         }
 
     }, [systemState, deviceType])
@@ -101,12 +97,12 @@ export default function Homepage() {
     // Instantiate scroll triggers
     function onMouseEnterVideoDiv(index: number) {
         gsap.to(titleRef.current, {
-            y: `-${index * 4.5}vmin`,
+            y: `-${index * 3.5}vmax`,
             duration: 1,
             ease: 'sine.out'
         })
         gsap.to(dateRef.current, {
-            y: `${index * 5}vmin`,
+            y: `${index * 4}vmax`,
             duration: 1,
             ease: 'sine.out'
         })
@@ -208,15 +204,15 @@ export default function Homepage() {
                 width: '100%',
                 zIndex: 1
             }}>
-                <Stack style={{position: 'relative', height: '4.5vmin', overflow: 'hidden', width: '100%'}}>
+                <Stack style={{position: 'relative', height: '3.5vmax', overflow: 'hidden', width: '100%'}}>
                     <div ref={titleRef} style={{position: 'absolute', top: 0, right: 0, width: '100%'}}>
                         {
                             videoLists.map((video: VideoDetails) => (
                                 <Text key={`title-text-${video.title}`} style={{
                                     userSelect: 'none',
                                     textAlign: 'end',
-                                    fontSize: '4.5vmin',
-                                    lineHeight: '4.5vmin',
+                                    fontSize: '3.5vmax',
+                                    lineHeight: '3.5vmax',
                                     fontWeight: 700,
                                     color: 'white',
                                     fontFamily: 'Instrument Serif'
@@ -233,16 +229,16 @@ export default function Homepage() {
                 width: '40vw',
                 zIndex: 1
             }}>
-                <Stack style={{position: 'relative', height: '5vmin', overflow: 'hidden', width: '100%'}}>
-                    <div ref={dateRef} style={{position: 'absolute', top: '-10vmin', right: 0, width: '40vw'}}>
+                <Stack style={{position: 'relative', height: '4vmax', overflow: 'hidden', width: '100%'}}>
+                    <div ref={dateRef} style={{position: 'absolute', top: '-8vmax', right: 0, width: '40vw'}}>
                         {
                             JSON.parse(JSON.stringify(videoLists)).reverse().map((video: VideoDetails, index: number) => (
                                 <Text key={`title-text-${video.date}-${index}`} style={{
                                     userSelect: 'none',
                                     textAlign: 'end',
-                                    fontSize: '4.5vmin',
-                                    lineHeight: '4.5vmin',
-                                    height: '5vmin',
+                                    fontSize: '3.5vmax',
+                                    lineHeight: '3.5vmax',
+                                    height: '4vmax',
                                     fontWeight: 300,
                                     color: 'white',
                                     fontFamily: 'Instrument Serif'

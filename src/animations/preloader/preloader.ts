@@ -1,8 +1,7 @@
 import gsap from "gsap";
 import {PreloaderIds} from "../../enum/element_ids.ts";
-import {diameter} from "../../components/preloader/preloader.tsx";
 
-export function PreloaderOnEnter() {
+export function PreloaderOnEnter(diameter: number) {
     const container = document.getElementById(PreloaderIds.container)!
     const circleContainer = document.getElementById(PreloaderIds.circleContainer)!
 

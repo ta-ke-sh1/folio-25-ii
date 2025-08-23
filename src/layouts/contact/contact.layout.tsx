@@ -17,19 +17,21 @@ export default function Contact() {
 
     const logoRef = useRef<HTMLImageElement>(null);
 
+    const intervalRef = useRef<number>(null)
+
     useEffect(() => {
-        const interval = setInterval(() => {
+        intervalRef.current = setInterval(() => {
             setCurrentIndex(prev => (prev < 8 ? prev + 1 : 0));
         }, 400);
 
-        return () => clearInterval(interval);
+        return () => clearInterval(Number(intervalRef.current));
     }, []);
 
     useEffect(() => {
         gsap.to(logoRef.current, {
             repeat: -1,
             rotation: "360",
-            duration: 20,
+            duration: 10,
             ease: 'linear',
             transformOrigin: 'center center'
         })
@@ -342,8 +344,10 @@ export default function Contact() {
             </Grid>
             {
                 Array(10).fill(0).map((_, index) => (
-                    <img key={`contact-img-${index}`} alt={`img-${index}`} src={`/small/${currentIndex + 1}.jpg`}
+                    <img key={`contact-img-${index}`}
+                         alt={`img-${index}`} src={`/small/${currentIndex + 1}.jpg`}
                          style={{
+                             border: deviceType === DeviceType.MOBILE ? 'none' : '12px solid white',
                              height: '40%',
                              position: 'absolute',
                              bottom: 0,

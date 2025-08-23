@@ -3,24 +3,28 @@ import {ZIndexLevel} from "../../enum/sizing.ts";
 import {useEffect} from "react";
 import {PreloaderOnEnter} from "../../animations/preloader/preloader.ts";
 import {PreloaderIds} from "../../enum/element_ids.ts";
-
-export const diameter = 200
-
-const circleStyle: CSSProperties = {
-    position: 'absolute',
-    height: `${diameter}px`,
-    width: `${diameter}px`,
-    borderRadius: '50%',
-    mixBlendMode: "screen"
-}
+import {useSystemStore} from "../../hooks/system_state.ts";
+import {DeviceType} from "../../enum/system_state.ts";
 
 export const Preloader: FC = () => {
 
+    const {deviceType} = useSystemStore()
+
+    const diameter = deviceType === DeviceType.DESKTOP ? 240 : 120
+
+    const circleStyle: CSSProperties = {
+        position: 'absolute',
+        height: `${diameter}px`,
+        width: `${diameter}px`,
+        borderRadius: '50%',
+        mixBlendMode: "screen"
+    }
+
     useEffect(() => {
         setTimeout(() => {
-            PreloaderOnEnter()
+            PreloaderOnEnter(diameter)
         }, 1000)
-    }, [])
+    }, [diameter])
 
     return (
         <div id={PreloaderIds.container} style={{
