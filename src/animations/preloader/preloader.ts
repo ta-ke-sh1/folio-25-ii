@@ -1,5 +1,6 @@
 import gsap from "gsap";
 import {PreloaderIds} from "../../enum/element_ids.ts";
+import {diameter} from "../../components/preloader/preloader.tsx";
 
 export function PreloaderOnEnter() {
     const container = document.getElementById(PreloaderIds.container)!
@@ -14,24 +15,26 @@ export function PreloaderOnEnter() {
     const ease = 'power2.inOut'
     const tl = gsap.timeline()
 
+    const percentage = 0.3
+
     tl.to(circleContainer!, {
         rotate: '135deg',
         duration: duration,
         ease: ease
     }).to(circle_1, {
-        top: '80px',
+        top: `${diameter * percentage}px`,
         duration: duration,
         ease: ease
     }, "<").to(circle_2, {
-        top: '-80px',
+        top: `-${diameter * percentage}px`,
         duration: duration,
         ease: ease
     }, "<").to(circle_3, {
-        left: '80px',
+        left: `${diameter * percentage}px`,
         duration: duration,
         ease: ease
     }, "<").to(circle_4, {
-        left: '-80px',
+        left: `-${diameter * percentage}px`,
         duration: duration,
         ease: ease
     }, "<").to(container, {

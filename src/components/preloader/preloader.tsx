@@ -4,7 +4,7 @@ import {useEffect} from "react";
 import {PreloaderOnEnter} from "../../animations/preloader/preloader.ts";
 import {PreloaderIds} from "../../enum/element_ids.ts";
 
-const diameter = 240
+export const diameter = 200
 
 const circleStyle: CSSProperties = {
     position: 'absolute',
@@ -52,28 +52,28 @@ export const Preloader: FC = () => {
                             top: '50%',
                             left: '50%',
                             transform: 'translate(-50%, -50%)',
-                            backgroundColor: '#fd7e14',
+                            backgroundColor: '#22b8cf',
                             ...circleStyle
                         }}></div>
                         <div id={`${PreloaderIds.circle}-2`} style={{
                             top: '50%',
                             left: '50%',
                             transform: 'translate(-50%, -50%)',
-                            backgroundColor: '#fa5252',
+                            backgroundColor: '#12b886',
                             ...circleStyle
                         }}></div>
                         <div id={`${PreloaderIds.circle}-3`} style={{
                             top: '50%',
                             left: '50%',
                             transform: 'translate(-50%, -50%)',
-                            backgroundColor: '#12b886',
+                            backgroundColor: '#fa5252',
                             ...circleStyle
                         }}></div>
                         <div id={`${PreloaderIds.circle}-4`} style={{
                             top: '50%',
                             left: '50%',
                             transform: 'translate(-50%, -50%)',
-                            backgroundColor: '#22b8cf',
+                            backgroundColor: '#fd7e14',
                             ...circleStyle
                         }}></div>
                     </div>

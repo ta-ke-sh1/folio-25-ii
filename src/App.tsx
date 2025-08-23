@@ -23,6 +23,17 @@ function App() {
     const {setDeviceType, setSystemState} = useSystemStore()
 
     useEffect(() => {
+        window.addEventListener('resize', resizeHandler)
+        return () => {
+            window.removeEventListener('resize', resizeHandler)
+        }
+    }, []);
+
+    function resizeHandler() {
+        // window.location.reload()
+    }
+
+    useEffect(() => {
         const width = window.innerWidth;
         if (/Mobi|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
             setDeviceType(DeviceType.MOBILE)

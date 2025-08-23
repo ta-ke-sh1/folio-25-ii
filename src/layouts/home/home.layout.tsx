@@ -175,28 +175,30 @@ export default function Homepage() {
     return (
         <>
             {/*Cursor item*/}
-            <div ref={cursorRef} style={{
-                position: "fixed",
-                backgroundColor: '#e03131',
-                pointerEvents: 'none',
-                height: `${cursorSize}px`,
-                width: `${cursorSize}px`,
-                transform: `translate(${cursorSize}px, ${cursorSize}px)`,
-                zIndex: ZIndexLevel.high
-            }}>
-                <div style={{position: 'relative', width: '400px'}}>
-                    <div id={'cursor-helperText'} style={{
-                        position: 'absolute',
-                        top: -25,
-                        left: 12,
-                        color: 'white',
-                        userSelect: 'none',
-                        pointerEvents: 'none',
-                    }}>
-                        [Click to View]
+            {
+                deviceType === DeviceType.DESKTOP && <div ref={cursorRef} style={{
+                    position: "fixed",
+                    backgroundColor: '#e03131',
+                    pointerEvents: 'none',
+                    height: `${cursorSize}px`,
+                    width: `${cursorSize}px`,
+                    transform: `translate(${cursorSize}px, ${cursorSize}px)`,
+                    zIndex: ZIndexLevel.high
+                }}>
+                    <div style={{position: 'relative', width: '400px'}}>
+                        <div id={'cursor-helperText'} style={{
+                            position: 'absolute',
+                            top: -25,
+                            left: 12,
+                            color: 'white',
+                            userSelect: 'none',
+                            pointerEvents: 'none',
+                        }}>
+                            [Click to View]
+                        </div>
                     </div>
                 </div>
-            </div>
+            }
 
             {/*Title text*/}
             <Stack align={'end'} gap={0} style={{
