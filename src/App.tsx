@@ -30,7 +30,7 @@ function App() {
     }, []);
 
     function resizeHandler() {
-        window.location.reload()
+        // window.location.reload()
     }
 
     useEffect(() => {
