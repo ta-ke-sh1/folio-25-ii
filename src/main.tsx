@@ -7,14 +7,15 @@ import '@mantine/core/styles.css';
 import {MantineProvider} from "@mantine/core";
 import Cursor from "./components/cursor/cursor.tsx";
 import Navigation from "./components/navigation/navigation.tsx";
-import "@fontsource-variable/geist/wght.css";
 import {Preloader} from "./components/preloader/preloader.tsx";
+import "@fontsource/ibm-plex-mono/400.css";
+import "@fontsource/instrument-serif/400.css";
 
 createRoot(document.getElementById('root')!).render(
     <StrictMode>
         <BrowserRouter>
             <MantineProvider theme={{
-                fontFamily: 'Geist Variable'
+                fontFamily: 'IBM Plex Mono'
             }}>
                 <Preloader/>
                 <Navigation/>

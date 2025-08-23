@@ -34,23 +34,36 @@ export default function Contact() {
     const commonStyle = {
         color: 'white',
         letterSpacing: '-0.5px',
-        fontSize: '20px',
+        fontSize: '18px',
     }
 
     function handleMouseClickLink(index: number) {
         console.log(index)
+        switch (index) {
+            case 0:
+                break
+            case 1:
+                break
+            case 2:
+                const mailElement = document.createElement("a");
+                mailElement.href = "mailto:ha.the.trung.1698@gmail.com?subject=Contact&body=Hi,";
+                mailElement.click();
+                break
+            default:
+                break
+        }
     }
 
-    function handleMouseEnterLink(index: number) {
-        const text = document.getElementById(`nav-link-${index}`)!
-        const arrow = document.getElementById(`nav-arrow-${index}`)!
+    function handleMouseEnterLink(index: number, data?: string) {
+        const textElement = document.getElementById(`nav-link-${index}`)!
+        const arrowElement = document.getElementById(`nav-arrow-${index}`)!
 
-        textShuffleLight(text, navItems[index], null, 50)
+        textShuffleLight(textElement, navItems[index], null, 50)
 
         const cursorText = document.getElementById('cursor-helperText')!
-        cursorText.innerHTML = '[Click to Access]'
+        cursorText.innerHTML = data ?? '[Click to Access]'
 
-        gsap.to(arrow, {
+        gsap.to(arrowElement, {
             rotation: 45,
             duration: 0.4,
             color: mainColors[index]
@@ -103,29 +116,21 @@ export default function Contact() {
                         <div>
                             <Text style={{
                                 color: '#ECEEDF',
-                                fontSize: '20px',
-                                lineHeight: '22px'
+                                fontSize: '16px',
+                                lineHeight: '20px',
+                                textTransform: 'uppercase'
                             }}>
-                                Three years of relentless development at Toshiba Software Development Vietnam
-                                have shaped a
-                                developer
-                                fluent in both logic and artistry. Now charting his own path, Trung crafts
-                                digital
-                                experiences
-                                that blur the line between function and feeling.
+                                Three years of practising & learning at Toshiba Software Development Vietnam
+                                has crafted Trung. Ha, a full-stack developer that specializes in materializing your
+                                visions in the digital worlds.
                                 <br/>
                                 <br/>
                                 But Trung doesn’t stop at the screen. He’s also behind the lens—capturing
-                                moments,
-                                framing
-                                stories, and crafting visuals that speak louder than words. His photography and
-                                video
-                                work
-                                bring
-                                texture to his technical world, adding depth, emotion, and a cinematic edge to
-                                his
-                                digital
-                                craft.
+                                moments, framing stories, and crafting visuals that speak louder than words. His
+                                photography and
+                                video work bring texture to his technical world, adding depth, emotion, and a cinematic
+                                edge to
+                                his works.
                             </Text>
                         </div>
                         <Stack justify={"end"}>
@@ -142,7 +147,7 @@ export default function Contact() {
                                 <Group justify={'space-between'}
                                        onMouseDown={() => handleMouseClickLink(0)}
                                        onMouseLeave={() => handleMouseExitLink(0)}
-                                       onMouseEnter={() => handleMouseEnterLink(0)}
+                                       onMouseEnter={() => handleMouseEnterLink(0, "[DROP A FOLLOW]")}
                                        style={{
                                            cursor: 'pointer',
                                            ...commonStyle,
@@ -162,7 +167,7 @@ export default function Contact() {
                                     onMouseDown={() => handleMouseClickLink(1)}
                                     onMouseLeave={() => handleMouseExitLink(1)}
                                     justify={'space-between'}
-                                    onMouseEnter={() => handleMouseEnterLink(1)}
+                                    onMouseEnter={() => handleMouseEnterLink(1, "[WANNA BE FRIENDS?]")}
                                     style={{
                                         cursor: 'pointer',
                                         ...commonStyle
@@ -193,7 +198,7 @@ export default function Contact() {
                                     onMouseDown={() => handleMouseClickLink(3)}
                                     onMouseLeave={() => handleMouseExitLink(3)}
                                     justify={'space-between'}
-                                    onMouseEnter={() => handleMouseEnterLink(3)}
+                                    onMouseEnter={() => handleMouseEnterLink(3, "[UNAVAILABLE AFTER 6]")}
                                     style={{
                                         cursor: 'pointer',
                                         ...commonStyle
@@ -209,7 +214,7 @@ export default function Contact() {
                                 <Group justify={'space-between'}
                                        onMouseDown={() => handleMouseClickLink(2)}
                                        onMouseLeave={() => handleMouseExitLink(2)}
-                                       onMouseEnter={() => handleMouseEnterLink(2)}
+                                       onMouseEnter={() => handleMouseEnterLink(2, "[SOMETHING FORMAL?]")}
                                        style={{
                                            cursor: 'pointer',
                                            ...commonStyle,

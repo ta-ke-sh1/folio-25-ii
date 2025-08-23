@@ -60,6 +60,11 @@ export default function Navigation() {
         toggle()
     }
 
+    function handleMouseEnterNav() {
+        const text = document.getElementById('cursor-helperText')!
+        text.innerHTML = '[TRUNG. HA]'
+    }
+
 
     return (
         <>
@@ -73,7 +78,7 @@ export default function Navigation() {
                     opened ? <XMarkSVG stroke={'white'}/> : <BurgerSVG/>
                 }
             </div>
-            <div style={{
+            <div onMouseEnter={handleMouseEnterNav} style={{
                 height: '83px',
                 borderBottom: '1px solid rgba(255,255,255,0.3)',
                 width: '100dvw',
@@ -89,8 +94,8 @@ export default function Navigation() {
                 }}>
                     <img alt={"logo"} src={'/logo-small.png'} height={'30px'}/>
                     {
-                        deviceType === DeviceType.DESKTOP ? <> <Text style={{color: 'white', fontSize: 16}}>Hanoi,
-                            Vietnam</Text>
+                        deviceType === DeviceType.DESKTOP ? <> <Text style={{color: 'white', fontSize: 16}}>HANOI,
+                            VIETNAM</Text>
                             <Text style={{color: 'white', fontSize: 16}}>{time}</Text>
                             <Group gap={"xl"}>
                             </Group></> : <></>

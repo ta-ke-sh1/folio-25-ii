@@ -12,6 +12,8 @@
   "dependencies": {
     "@fiddle-digital/string-tune": "^1.1.26",
     "@fontsource-variable/geist": "^5.2.6",
+    "@fontsource/ibm-plex-mono": "^5.2.6",
+    "@fontsource/instrument-serif": "^5.2.6",
     "@mantine/core": "^8.2.5",
     "@mantine/hooks": "^8.2.5",
     "gsap": "^3.13.0",

@@ -6,28 +6,26 @@ import {ZIndexLevel} from "../../enum/sizing.ts";
 import type {VideoDetails} from "./types/home.types.ts";
 import {mainColors} from "../../enum/colors.ts";
 import {DeviceType} from "../../enum/system_state.ts";
-import Contact from "../contact/contact.layout.tsx";
-import {textShuffleLight} from "../../animations/text/shuffle.ts";
 
 const videoLists: VideoDetails[] = [
     {
         id: 1,
         url: "/video-1.webm",
-        date: "Aug. 2025",
+        date: "08/2025",
         title: "Summer Memories - Pt 3",
         link: "https://www.instagram.com/p/DNTMmoqz2EN/"
     },
     {
         id: 2,
         url: "/video-2.webm",
-        date: "Jul. 2025",
+        date: "07/2025",
         title: "Summer Memories - Pt 2",
         link: "https://www.instagram.com/p/DNBTitOTlEB/"
     },
     {
         id: 3,
         url: "/video-3.webm",
-        date: "Jun. 2025",
+        date: "06/2025",
         title: "Summer Memories - Pt 1",
         link: "https://www.instagram.com/p/DK91viVT6Hv/"
     }
@@ -108,7 +106,7 @@ export default function Homepage() {
             ease: 'sine.out'
         })
         gsap.to(dateRef.current, {
-            y: `-${index * 4.5}vmin`,
+            y: `${index * 5}vmin`,
             duration: 1,
             ease: 'sine.out'
         })
@@ -155,14 +153,23 @@ export default function Homepage() {
         }
     }
 
+    function handleClickVideo(index: number) {
+        window.open(videoLists[index].link)
+    }
+
     function onCursorEnterThumbnail() {
         const text = document.getElementById('cursor-helperText')!
-        text.innerHTML = 'Next Item'
+        text.innerHTML = '[Next Item]'
     }
 
     function onCursorLeaveThumbnail() {
         const text = document.getElementById('cursor-helperText')!
-        text.innerHTML = 'Click to View'
+        text.innerHTML = '[Click to View]'
+    }
+
+    function handleMouseEnterMainDiv() {
+        const text = document.getElementById('cursor-helperText')!
+        text.innerHTML = '[Click to View]'
     }
 
     return (
@@ -186,7 +193,7 @@ export default function Homepage() {
                         userSelect: 'none',
                         pointerEvents: 'none',
                     }}>
-                        Click to View
+                        [Click to View]
                     </div>
                 </div>
             </div>
@@ -204,11 +211,13 @@ export default function Homepage() {
                         {
                             videoLists.map((video: VideoDetails) => (
                                 <Text key={`title-text-${video.title}`} style={{
+                                    userSelect: 'none',
                                     textAlign: 'end',
                                     fontSize: '4.5vmin',
                                     lineHeight: '4.5vmin',
                                     fontWeight: 700,
                                     color: 'white',
+                                    fontFamily: 'Instrument Serif'
                                 }}>{video.title}</Text>
                             ))
                         }
@@ -223,15 +232,18 @@ export default function Homepage() {
                 zIndex: 1
             }}>
                 <Stack style={{position: 'relative', height: '5vmin', overflow: 'hidden', width: '100%'}}>
-                    <div ref={dateRef} style={{position: 'absolute', top: 0, right: 0, width: '40vw'}}>
+                    <div ref={dateRef} style={{position: 'absolute', top: '-10vmin', right: 0, width: '40vw'}}>
                         {
-                            videoLists.map((video: VideoDetails, index: number) => (
+                            JSON.parse(JSON.stringify(videoLists)).reverse().map((video: VideoDetails, index: number) => (
                                 <Text key={`title-text-${video.date}-${index}`} style={{
+                                    userSelect: 'none',
                                     textAlign: 'end',
                                     fontSize: '4.5vmin',
                                     lineHeight: '4.5vmin',
+                                    height: '5vmin',
                                     fontWeight: 300,
                                     color: 'white',
+                                    fontFamily: 'Instrument Serif'
                                 }}>{video.date}</Text>
                             ))
                         }
@@ -278,6 +290,7 @@ export default function Homepage() {
                 letterSpacing: -2,
                 fontWeight: 700,
                 userSelect: 'none',
+                pointerEvents: 'none',
                 width: '40%',
                 zIndex: 1
             }}>
@@ -285,7 +298,7 @@ export default function Homepage() {
             </Text>
 
             {/*Main stack item*/}
-            <Stack gap={0} style={{
+            <Stack gap={0} onMouseEnter={handleMouseEnterMainDiv} style={{
                 position: 'fixed',
                 left: 0,
                 top: 0,
@@ -306,6 +319,7 @@ export default function Homepage() {
                         {
                             videoLists.map((videoList: VideoDetails, index: number) => (
                                 <video
+                                    onClick={() => handleClickVideo(index)}
                                     id={`banner-video-${index}`} className={"section"}
                                     key={`banner-video-${videoList.id}-${index}`}
                                     muted
