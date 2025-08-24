@@ -19,8 +19,8 @@ createRoot(document.getElementById('root')!).render(
             }}>
                 <Preloader/>
                 <Navigation/>
-                <App/>
                 <Cursor/>
+                <App/>
             </MantineProvider>
         </BrowserRouter>
     </StrictMode>,

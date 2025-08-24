@@ -7,6 +7,7 @@ import {textShuffleLight} from "../../animations/text/shuffle.ts";
 import {mainColors} from "../../enum/colors.ts";
 import {useSystemStore} from "../../hooks/system_state.ts";
 import {DeviceType} from "../../enum/system_state.ts";
+import {CursorTexts, updateCursorText} from "../../components/cursor/cursor.tsx";
 
 export default function Contact() {
 
@@ -97,14 +98,12 @@ export default function Contact() {
         }
     }
 
-    function handleMouseEnterLink(index: number, data?: string) {
+    function handleMouseEnterLink(index: number) {
         const textElement = document.getElementById(`nav-link-${index}`)!
         const arrowElement = document.getElementById(`nav-arrow-${index}`)!
 
         textShuffleLight(textElement, navItems[index], null, 50)
-
-        const cursorText = document.getElementById('cursor-helperText')!
-        cursorText.innerHTML = data ?? '[👆 ACCESS]'
+        updateCursorText(CursorTexts.access)
 
         gsap.to(arrowElement, {
             rotation: 45,
@@ -115,9 +114,7 @@ export default function Contact() {
 
     function handleMouseExitLink(index: number) {
         const arrow = document.getElementById(`nav-arrow-${index}`)!
-
-        const cursorText = document.getElementById('cursor-helperText')!
-        cursorText.innerHTML = '[🙋‍♂️ TRUNG. HA]'
+        updateCursorText(CursorTexts.default)
 
         gsap.to(arrow, {
             rotation: 0,

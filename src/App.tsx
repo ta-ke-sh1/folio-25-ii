@@ -1,8 +1,10 @@
 import {Route, Routes} from "react-router";
 import {type ReactNode, useEffect} from "react";
-import Homepage from "./layouts/home/home.layout.tsx";
+import MemoriesLayout from "./layouts/memories/memories.layout.tsx";
 import {useSystemStore} from "./hooks/system_state.ts";
 import {DeviceType, SystemState} from "./enum/system_state.ts";
+import ErrorLayout from "./layouts/error/error.layout.tsx";
+import HomeLayout from "./layouts/home/home.layout.tsx";
 
 interface RouteData {
     name: string;
@@ -12,9 +14,19 @@ interface RouteData {
 
 const routes: RouteData[] = [
     {
-        name: "home",
+        name: "404",
         path: "*",
-        element: <Homepage/>
+        element: <ErrorLayout/>
+    },
+    {
+        name: "home",
+        path: "/",
+        element: <HomeLayout/>
+    },
+    {
+        name: "memories",
+        path: "/memories",
+        element: <MemoriesLayout/>
     },
 ]
 
