@@ -3,6 +3,7 @@ import PrismaticBurst from "../../components/backgrounds/prismatic/prismatic.tsx
 import './styles/home.scss'
 import InfiniteScroll from "../../components/containers/infinite_scroll/infinite_scroll.tsx";
 import {InfiniteScrollItem, HomepageItem} from "../../components/containers/infinite_scroll/infinite_item.tsx";
+import {mainColors} from "../../enum/colors.ts";
 
 
 export default function HomeLayout() {
@@ -101,6 +102,7 @@ export default function HomeLayout() {
                 zIndex: 0,
             }}>
                 <PrismaticBurst
+                    colors={mainColors}
                     animationType="hover"
                     intensity={4}
                     speed={1.5}
