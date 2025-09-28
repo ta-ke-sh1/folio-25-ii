@@ -1,11 +1,11 @@
-import {Group, Stack, Text} from "@mantine/core";
+import {Group, Text} from "@mantine/core";
 import {useEffect, useRef, useState} from "react";
 import {useSystemStore} from "../../hooks/system_state.ts";
 import {DeviceType} from "../../enum/system_state.ts";
 import {useDisclosure} from "@mantine/hooks";
 import gsap from "gsap";
 import {ZIndexLevel} from "../../enum/sizing.ts";
-import {BurgerSVG, XMarkSVG} from "../icons/icons.tsx";
+import {XMarkSVG} from "../icons/icons.tsx";
 import Contact from "../../layouts/contact/contact.layout.tsx";
 
 export default function Navigation() {
@@ -70,8 +70,9 @@ export default function Navigation() {
         <>
             <div onClick={handleMenu} style={{
                 position: 'fixed',
-                top: '28px',
+                top: '13px',
                 right: '20px',
+                userSelect: 'none',
                 zIndex: ZIndexLevel.high + 1
             }}>
                 {
@@ -83,8 +84,7 @@ export default function Navigation() {
                 }
             </div>
             <div onMouseEnter={handleMouseEnterNav} style={{
-                height: '83px',
-                borderBottom: '1px solid rgba(255,255,255,0.3)',
+                height: '53px',
                 width: '100dvw',
                 position: 'fixed',
                 top: 0,
@@ -97,12 +97,26 @@ export default function Navigation() {
                     userSelect: 'none'
                 }}>
                     <img alt={"logo"} src={'/logo-small.png'} height={'30px'}/>
+                </Group>
+            </div>
+            <div style={{
+                height: '53px',
+                width: '100dvw',
+                position: 'fixed',
+                bottom: 0,
+                left: 0,
+                zIndex: ZIndexLevel.medium
+            }}>
+                <Group pr={"lg"} pl={"lg"} justify={'space-between'} style={{
+                    height: '100%',
+                    width: '100%',
+                    userSelect: 'none'
+                }}>
                     {
                         deviceType === DeviceType.DESKTOP ? <> <Text style={{color: 'white', fontSize: 16}}>HANOI,
                             VIETNAM</Text>
                             <Text style={{color: 'white', fontSize: 16}}>{time}</Text>
-                            <Group gap={"xl"}>
-                            </Group></> : <></>
+                        </> : <></>
                     }
                 </Group>
             </div>

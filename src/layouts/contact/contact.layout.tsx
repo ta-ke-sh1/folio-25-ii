@@ -79,7 +79,6 @@ export default function Contact() {
     }
 
     function handleMouseClickLink(index: number) {
-        console.log(index)
         switch (index) {
             case 0:
                 window.open('https://www.instagram.com/tru.ng_ha')
@@ -98,12 +97,12 @@ export default function Contact() {
         }
     }
 
-    function handleMouseEnterLink(index: number) {
+    function handleMouseEnterLink(index: number, text?: any) {
         const textElement = document.getElementById(`nav-link-${index}`)!
         const arrowElement = document.getElementById(`nav-arrow-${index}`)!
 
         textShuffleLight(textElement, navItems[index], null, 50)
-        updateCursorText(CursorTexts.access)
+        updateCursorText(text ?? CursorTexts.access)
 
         gsap.to(arrowElement, {
             rotation: 45,
@@ -127,7 +126,7 @@ export default function Contact() {
         <div style={{
             height: '100dvh',
             width: '100dvw',
-            backgroundColor: '#242424',
+            backgroundColor: '#101010',
             zIndex: ZIndexLevel.high - 1,
             position: 'fixed',
             left: 0,

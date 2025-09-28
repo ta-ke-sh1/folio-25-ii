@@ -8,20 +8,20 @@ import {MantineProvider} from "@mantine/core";
 import Cursor from "./components/cursor/cursor.tsx";
 import Navigation from "./components/navigation/navigation.tsx";
 import {Preloader} from "./components/preloader/preloader.tsx";
-import "@fontsource/ibm-plex-mono/400.css";
+import "@fontsource/fragment-mono/400.css";
 import "@fontsource/instrument-serif/400.css";
 
 createRoot(document.getElementById('root')!).render(
     <StrictMode>
-        <BrowserRouter>
-            <MantineProvider theme={{
-                fontFamily: 'IBM Plex Mono'
-            }}>
+        <MantineProvider theme={{
+            fontFamily: 'Fragment Mono'
+        }}>
+            <BrowserRouter>
                 <Preloader/>
                 <Navigation/>
                 <Cursor/>
                 <App/>
-            </MantineProvider>
-        </BrowserRouter>
+            </BrowserRouter>
+        </MantineProvider>
     </StrictMode>,
 )
