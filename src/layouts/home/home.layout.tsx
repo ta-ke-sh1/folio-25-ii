@@ -113,9 +113,10 @@ export default function HomeLayout() {
             </div>
             <div style={{
                 position: 'absolute',
-                left: 0,
+                left: '50%',
+                transform: 'translateX(-50%)',
                 top: 0,
-                width: '100dvw',
+                width: '90dvw',
                 height: '100dvh',
             }}>
                 <div style={{
