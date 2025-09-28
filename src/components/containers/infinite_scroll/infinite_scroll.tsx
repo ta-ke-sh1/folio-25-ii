@@ -29,7 +29,7 @@ const InfiniteScroll: React.FC<InfiniteScrollProps> = ({
                                                            maxHeight = '100%',
                                                            negativeMargin = '-0.5em',
                                                            items = [],
-                                                           itemMinHeight = 150,
+                                                           itemMinHeight = '50dvh',
                                                            isTilted = false,
                                                            tiltDirection = 'left',
                                                            autoplay = false,
@@ -39,13 +39,6 @@ const InfiniteScroll: React.FC<InfiniteScrollProps> = ({
                                                        }) => {
     const wrapperRef = useRef<HTMLDivElement>(null);
     const containerRef = useRef<HTMLDivElement>(null);
-
-    const getTiltTransform = (): string => {
-        if (!isTilted) return 'none';
-        return tiltDirection === 'left'
-            ? 'rotateX(20deg) rotateZ(-20deg) skewX(20deg)'
-            : 'rotateX(20deg) rotateZ(20deg) skewX(-20deg)';
-    };
 
     useEffect(() => {
         const container = containerRef.current;
@@ -81,7 +74,7 @@ const InfiniteScroll: React.FC<InfiniteScrollProps> = ({
             },
             onChange: ({deltaY, isDragging, event}) => {
                 const d = event.type === 'wheel' ? -deltaY : deltaY;
-                const distance = isDragging ? d * 2 : d * 4;
+                const distance = isDragging ? d * 4 : d;
                 divItems.forEach(child => {
                     gsap.to(child, {
                         duration: 0.5,
@@ -170,9 +163,6 @@ const InfiniteScroll: React.FC<InfiniteScrollProps> = ({
                 <div
                     className="infinite-scroll-container"
                     ref={containerRef}
-                    style={{
-                        transform: getTiltTransform()
-                    }}
                 >
                     {items.map((item, i) => (
                         <div className="infinite-scroll-item" key={`scroll-item-${i}`}>

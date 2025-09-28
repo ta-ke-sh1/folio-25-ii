@@ -73,7 +73,7 @@ export default function Cursor() {
                 height: `${cursorSize}px`,
                 width: `${cursorSize}px`,
                 transform: `translate(${cursorSize}px, ${cursorSize}px)`,
-                zIndex: ZIndexLevel.high,
+                zIndex: ZIndexLevel.highest,
                 mixBlendMode: 'difference',
             }}>
                 <div style={{position: 'relative', width: '400px'}}>
