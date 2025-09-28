@@ -1,4 +1,4 @@
-import {Stack, Text} from "@mantine/core";
+import {Group, Stack, Text} from "@mantine/core";
 import PrismaticBurst from "../../components/backgrounds/prismatic/prismatic.tsx";
 import './styles/home.scss'
 import InfiniteScroll from "../../components/containers/infinite_scroll/infinite_scroll.tsx";
@@ -58,35 +58,42 @@ export default function HomeLayout() {
             overflow: 'hidden',
         }}>
             {/*Hero text*/}
-            <Stack gap={0} style={{
+            <Group pr={"md"} pl={"md"} justify={'space-between'} style={{
                 position: 'absolute',
                 top: '50%',
-                left: '50%',
-                transform: 'translate(-50%, -50%)',
+                transform: 'translateY(-50%)',
                 userSelect: 'none',
                 pointerEvents: 'none',
-                width: '40%',
+                width: '100dvw',
                 zIndex: 1
             }}>
-                <Text id={'hero-text'} style={{
-                    fontFamily: 'Fragment Mono',
+                <Text style={{
                     color: 'white',
-                    textAlign: 'center',
-                    letterSpacing: 0,
-                    lineHeight: 0.6,
-                }}>
-                    THIS WEBSITE IS
-                </Text>
-                <Text id={'hero-text'} style={{
-                    fontFamily: 'Instrument Serif',
+                }}>TRUNG. HA</Text>
+                <Stack gap={0}>
+                    <Text id={'hero-text'} style={{
+                        fontFamily: 'Fragment Mono',
+                        color: 'white',
+                        textAlign: 'center',
+                        letterSpacing: 0,
+                        lineHeight: 0.6,
+                    }}>
+                        THIS WEBSITE IS
+                    </Text>
+                    <Text id={'hero-text'} style={{
+                        fontFamily: 'Instrument Serif',
+                        color: 'white',
+                        textAlign: 'center',
+                        letterSpacing: 0,
+                        fontSize: '2rem'
+                    }}>
+                        where a boring developer escapes
+                    </Text>
+                </Stack>
+                <Text style={{
                     color: 'white',
-                    textAlign: 'center',
-                    letterSpacing: 0,
-                    fontSize: '2rem'
-                }}>
-                    where a boring developer escapes
-                </Text>
-            </Stack>
+                }}>F0LI0 25</Text>
+            </Group>
             <div style={{
                 position: 'relative',
                 width: '100%',
