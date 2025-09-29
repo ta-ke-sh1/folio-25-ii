@@ -1,8 +1,8 @@
-import React, {useRef, useEffect,} from 'react';
-import type {ReactNode} from 'react';
-import {gsap} from 'gsap';
-import {Observer} from 'gsap/Observer';
-import './infinite_scroll.scss';
+import type {ReactNode} from "react";
+import React, {useEffect, useRef} from "react";
+import {gsap} from "gsap";
+import {Observer} from "gsap/Observer";
+import "./infinite_scroll.scss";
 
 gsap.registerPlugin(Observer);
 
@@ -17,25 +17,25 @@ interface InfiniteScrollProps {
     items?: InfiniteScrollItem[];
     itemMinHeight?: number;
     isTilted?: boolean;
-    tiltDirection?: 'left' | 'right';
+    tiltDirection?: "left" | "right";
     autoplay?: boolean;
     autoplaySpeed?: number;
-    autoplayDirection?: 'down' | 'up';
+    autoplayDirection?: "down" | "up";
     pauseOnHover?: boolean;
 }
 
 const InfiniteScroll: React.FC<InfiniteScrollProps> = ({
-                                                           width = '30rem',
-                                                           maxHeight = '100%',
-                                                           negativeMargin = '-0.5em',
+                                                           width = "30rem",
+                                                           maxHeight = "100%",
+                                                           negativeMargin = "-0.5em",
                                                            items = [],
-                                                           itemMinHeight = '50dvh',
+                                                           itemMinHeight = "50dvh",
                                                            isTilted = false,
-                                                           tiltDirection = 'left',
+                                                           tiltDirection = "left",
                                                            autoplay = false,
                                                            autoplaySpeed = 0.5,
-                                                           autoplayDirection = 'down',
-                                                           pauseOnHover = false
+                                                           autoplayDirection = "down",
+                                                           pauseOnHover = false,
                                                        }) => {
     const wrapperRef = useRef<HTMLDivElement>(null);
     const containerRef = useRef<HTMLDivElement>(null);
@@ -64,42 +64,42 @@ const InfiniteScroll: React.FC<InfiniteScrollProps> = ({
 
         const observer = Observer.create({
             target: container,
-            type: 'wheel,touch,pointer',
+            type: "wheel,touch,pointer",
             preventDefault: true,
             onPress: ({target}) => {
-                (target as HTMLElement).style.cursor = 'grabbing';
+                (target as HTMLElement).style.cursor = "grabbing";
             },
             onRelease: ({target}) => {
-                (target as HTMLElement).style.cursor = 'grab';
+                (target as HTMLElement).style.cursor = "grab";
             },
             onChange: ({deltaY, isDragging, event}) => {
-                const d = event.type === 'wheel' ? -deltaY : deltaY;
+                const d = event.type === "wheel" ? -deltaY : deltaY;
                 const distance = isDragging ? d * 4 : d;
-                divItems.forEach(child => {
+                divItems.forEach((child) => {
                     gsap.to(child, {
                         duration: 0.5,
-                        ease: 'expo.out',
+                        ease: "expo.out",
                         y: `+=${distance}`,
                         modifiers: {
-                            y: gsap.utils.unitize(wrapFn)
-                        }
+                            y: gsap.utils.unitize(wrapFn),
+                        },
                     });
                 });
-            }
+            },
         });
 
         let rafId: number;
         if (autoplay) {
-            const directionFactor = autoplayDirection === 'down' ? 1 : -1;
+            const directionFactor = autoplayDirection === "down" ? 1 : -1;
             const speedPerFrame = autoplaySpeed * directionFactor;
 
             const tick = () => {
-                divItems.forEach(child => {
+                divItems.forEach((child) => {
                     gsap.set(child, {
                         y: `+=${speedPerFrame}`,
                         modifiers: {
-                            y: gsap.utils.unitize(wrapFn)
-                        }
+                            y: gsap.utils.unitize(wrapFn),
+                        },
                     });
                 });
                 rafId = requestAnimationFrame(tick);
@@ -113,14 +113,14 @@ const InfiniteScroll: React.FC<InfiniteScrollProps> = ({
                     rafId = requestAnimationFrame(tick);
                 };
 
-                container.addEventListener('mouseenter', stopTicker);
-                container.addEventListener('mouseleave', startTicker);
+                container.addEventListener("mouseenter", stopTicker);
+                container.addEventListener("mouseleave", startTicker);
 
                 return () => {
                     observer.kill();
                     stopTicker();
-                    container.removeEventListener('mouseenter', stopTicker);
-                    container.removeEventListener('mouseleave', startTicker);
+                    container.removeEventListener("mouseenter", stopTicker);
+                    container.removeEventListener("mouseleave", startTicker);
                 };
             } else {
                 return () => {
@@ -156,14 +156,15 @@ const InfiniteScroll: React.FC<InfiniteScrollProps> = ({
           }
         `}
             </style>
-            <div className="infinite-scroll-wrapper" ref={wrapperRef} style={{
-                height: '100%',
-                width: '100%',
-            }}>
-                <div
-                    className="infinite-scroll-container"
-                    ref={containerRef}
-                >
+            <div
+                className="infinite-scroll-wrapper"
+                ref={wrapperRef}
+                style={{
+                    height: "100%",
+                    width: "100%",
+                }}
+            >
+                <div className="infinite-scroll-container" ref={containerRef}>
                     {items.map((item, i) => (
                         <div className="infinite-scroll-item" key={`scroll-item-${i}`}>
                             {item.content}

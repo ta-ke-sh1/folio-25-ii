@@ -1,5 +1,5 @@
 import React, {useEffect, useRef} from 'react';
-import {Renderer, Program, Mesh, Triangle, Texture} from 'ogl';
+import {Mesh, Program, Renderer, Texture, Triangle} from 'ogl';
 import './prismatic.css';
 
 type Offset = { x?: number | string; y?: number | string };

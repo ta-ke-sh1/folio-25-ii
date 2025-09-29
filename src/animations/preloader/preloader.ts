@@ -1,48 +1,60 @@
 import gsap from "gsap";
 import {PreloaderIds} from "../../enum/element_ids.ts";
 
-export function PreloaderOnEnter(diameter: number) {
-    const container = document.getElementById(PreloaderIds.container)!
-    const circleContainer = document.getElementById(PreloaderIds.circleContainer)!
+export function initPreloader() {
+}
 
-    const circle_1 = document.getElementById(`${PreloaderIds.circle}-1`)!
-    const circle_2 = document.getElementById(`${PreloaderIds.circle}-2`)!
-    const circle_3 = document.getElementById(`${PreloaderIds.circle}-3`)!
-    const circle_4 = document.getElementById(`${PreloaderIds.circle}-4`)!
+export function PreloaderOnFirstEntrance() {
+    const container = document.getElementById(PreloaderIds.container)!;
+    const container_2 = document.getElementById(PreloaderIds.container2)!;
+    const tl = gsap.timeline();
 
-    const duration = 2;
-    const ease = 'power2.inOut'
-    const tl = gsap.timeline()
+    tl.to(container, {
+        y: "-100%",
+        duration: 1.5,
+        ease: "power2.out",
+    }).to(
+        container_2,
+        {
+            y: "100%",
+            duration: 1.5,
+            ease: "power2.out",
+        },
+        "<"
+    );
+}
 
-    const percentage = 0.3
+export function PreloaderOnEnter() {
+    const container = document.getElementById(PreloaderIds.container)!;
+    const tl = gsap.timeline();
 
-    tl.to(circleContainer!, {
-        rotate: '135deg',
-        duration: duration,
-        ease: ease
-    }).to(circle_1, {
-        top: `${diameter * percentage}px`,
-        duration: duration,
-        ease: ease
-    }, "<").to(circle_2, {
-        top: `-${diameter * percentage}px`,
-        duration: duration,
-        ease: ease
-    }, "<").to(circle_3, {
-        left: `${diameter * percentage}px`,
-        duration: duration,
-        ease: ease
-    }, "<").to(circle_4, {
-        left: `-${diameter * percentage}px`,
-        duration: duration,
-        ease: ease
-    }, "<").to(container, {
-        opacity: 0,
-        delay: 1,
-        duration: 1,
-        ease: 'expo.out',
-    },).to(container, {
-        x: '100%',
+    tl.to(container, {
+        filter: "blur(100px)",
+        duration: 1.5,
+        ease: "power2.out",
+    }).to(container, {
+        y: "-100%",
         duration: 0,
-    })
+    });
+}
+
+export function PreloaderOnExit() {
+    const container = document.getElementById(PreloaderIds.container)!;
+    const container_2 = document.getElementById(PreloaderIds.container2)!;
+
+    const tl = gsap.timeline();
+
+    tl.to(container, {
+        y: "0%",
+        duration: 1.5,
+        ease: "power2.out",
+    }).to(
+        container_2,
+        {
+            y: "0%",
+            duration: 1.5,
+            ease: "power2.out",
+        },
+        "<"
+    );
 }
