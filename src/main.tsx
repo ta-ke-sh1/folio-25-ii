@@ -19,8 +19,8 @@ createRoot(document.getElementById("root")!).render(
             }}
         >
             <BrowserRouter>
-                <Preloader/>
                 <Navigation/>
+                <Preloader/>
                 <Cursor/>
                 <App/>
             </BrowserRouter>

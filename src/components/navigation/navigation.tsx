@@ -8,8 +8,13 @@ import {ZIndexLevel} from "../../enum/sizing.ts";
 import {XMarkSVG} from "../icons/icons.tsx";
 import Contact from "../../layouts/contact/contact.layout.tsx";
 import {PreloaderIds} from "../../enum/element_ids.ts";
+import {useNavigate} from "react-router";
+import {PreloaderOnExit} from "../../animations/preloader/preloader.ts";
 
 export default function Navigation() {
+
+    const navigate = useNavigate()
+
     const {deviceType} = useSystemStore();
 
     const menuRef = useRef<HTMLDivElement>(null);
@@ -74,6 +79,13 @@ export default function Navigation() {
         });
     }, []);
 
+    function handleNavigate(href: string) {
+        PreloaderOnExit();
+        setTimeout(() => {
+            navigate(href)
+        }, 2000)
+    }
+
     return (
         <>
             <img
@@ -92,7 +104,6 @@ export default function Navigation() {
                 width={"100px"}
             />
             <div
-                onClick={handleMenu}
                 style={{
                     position: "fixed",
                     top: "13px",
@@ -103,6 +114,18 @@ export default function Navigation() {
             >
                 <Group>
                     <Text
+                        onClick={() => handleNavigate("/")}
+                        style={{
+                            fontSize: 14,
+                            textDecoration: "underline",
+                            color: "white",
+                            cursor: "pointer",
+                        }}
+                    >
+                        /index
+                    </Text>
+                    <Text
+                        onClick={() => handleNavigate("/memories")}
                         style={{
                             fontSize: 14,
                             textDecoration: "underline",
@@ -113,6 +136,7 @@ export default function Navigation() {
                         /memories
                     </Text>
                     <Text
+                        onClick={() => handleNavigate("/playground")}
                         style={{
                             fontSize: 14,
                             textDecoration: "underline",
@@ -124,7 +148,6 @@ export default function Navigation() {
                     </Text>
                 </Group>
             </div>
-
             {opened ? (
                 <div
                     onClick={handleMenu}

@@ -3,6 +3,7 @@ import {useRef} from "react";
 import gsap from "gsap";
 import {CursorTexts, updateCursorText} from "../../cursor/cursor";
 import {PreloaderOnExit} from "../../../animations/preloader/preloader";
+import {useNavigate} from "react-router";
 
 export function InfiniteScrollItem({content, height = 250, index}) {
     const getRenderLayout = () => {
@@ -78,6 +79,9 @@ export function InfiniteScrollItem({content, height = 250, index}) {
 }
 
 export function HomepageItem({index, title, size, ratio, type}) {
+
+    const navigate = useNavigate()
+
     const imageRef = useRef(null);
 
     function handleMouseEnter() {
@@ -103,15 +107,10 @@ export function HomepageItem({index, title, size, ratio, type}) {
     }
 
     function handleMouseClick() {
-        console.log({
-            index,
-            title,
-            size,
-            ratio,
-            type,
-        });
-
         PreloaderOnExit();
+        setTimeout(() => {
+            navigate("/memories")
+        }, 2000)
     }
 
     return (

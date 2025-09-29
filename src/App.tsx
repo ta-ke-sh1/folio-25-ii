@@ -5,6 +5,7 @@ import {useSystemStore} from "./hooks/system_state.ts";
 import {DeviceType, SystemState} from "./enum/system_state.ts";
 import ErrorLayout from "./layouts/error/error.layout.tsx";
 import HomeLayout from "./layouts/home/home.layout.tsx";
+import VisionLayout from "./layouts/vision/vision.layout.tsx";
 
 interface RouteData {
     name: string;
@@ -27,6 +28,11 @@ const routes: RouteData[] = [
         name: "memories",
         path: "/memories",
         element: <MemoriesLayout/>
+    },
+    {
+        name: "vision",
+        path: "/vision/:id",
+        element: <VisionLayout/>
     },
 ]
 

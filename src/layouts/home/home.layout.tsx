@@ -5,6 +5,8 @@ import InfiniteScroll from "../../components/containers/infinite_scroll/infinite
 import {HomepageItem, InfiniteScrollItem} from "../../components/containers/infinite_scroll/infinite_item.tsx";
 import {mainColors} from "../../enum/colors.ts";
 import {useMediaQuery} from "@mantine/hooks";
+import {useEffect} from "react";
+import {PreloaderOnFirstEntrance} from "../../animations/preloader/preloader.ts";
 
 export default function HomeLayout() {
     const isMobile = useMediaQuery("(max-width: 768px)");
@@ -51,6 +53,12 @@ export default function HomeLayout() {
             ratio: "1920x1080",
         },
     ];
+
+    useEffect(() => {
+        setTimeout(() => {
+            PreloaderOnFirstEntrance();
+        }, 1000);
+    }, [])
 
     return (
         <Stack
@@ -145,7 +153,7 @@ export default function HomeLayout() {
                     backgroundColor: "black",
                 }}
             >
-                <PrismaticBurst colors={mainColors} animationType="hover" intensity={5} speed={1.5} distort={5}
+                <PrismaticBurst colors={mainColors} animationType="rotate3d" intensity={5} speed={0.8} distort={5}
                                 hoverDampness={0.25} rayCount={12} mixBlendMode="lighten"/>
             </div>
             <div

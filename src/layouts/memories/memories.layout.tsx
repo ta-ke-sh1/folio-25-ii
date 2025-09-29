@@ -5,6 +5,7 @@ import {ZIndexLevel} from "../../enum/sizing.ts";
 import type {VideoDetails} from "./types/home.types.ts";
 import {mainColors} from "../../enum/colors.ts";
 import {CursorTexts, updateCursorText} from "../../components/cursor/cursor.tsx";
+import {PreloaderOnFirstEntrance} from "../../animations/preloader/preloader.ts";
 
 const videoLists: VideoDetails[] = [
     {
@@ -44,6 +45,12 @@ export default function MemoriesLayout() {
         return () => {
             document.removeEventListener("mousemove", init_eye_cursor);
         };
+    }, []);
+
+    useEffect(() => {
+        setTimeout(() => {
+            PreloaderOnFirstEntrance();
+        }, 1000);
     }, []);
 
     function init_eye_cursor(event: any) {

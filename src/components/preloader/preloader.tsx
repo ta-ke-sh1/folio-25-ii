@@ -1,16 +1,8 @@
 import type {FC} from "react";
-import {useEffect} from "react";
 import {ZIndexLevel} from "../../enum/sizing.ts";
-import {initPreloader, PreloaderOnFirstEntrance} from "../../animations/preloader/preloader.ts";
 import {PreloaderIds} from "../../enum/element_ids.ts";
 
 export const Preloader: FC = () => {
-    useEffect(() => {
-        initPreloader();
-        setTimeout(() => {
-            PreloaderOnFirstEntrance();
-        }, 1000);
-    }, []);
 
     return (
         <>
