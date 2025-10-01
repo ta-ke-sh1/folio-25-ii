@@ -176,7 +176,7 @@ export default function Navigation() {
                             return <div key={`nav-item-${index}-${locationItem.title}`} style={{
                                 width: '120px',
                                 padding: itemPadding,
-                                backgroundColor: isCurrentPage ? 'transparent' : 'white',
+                                backgroundColor: isCurrentPage ? 'black' : 'white',
                                 border: isCurrentPage ? '1px solid white' : 'none'
                             }}>
                                 <Text

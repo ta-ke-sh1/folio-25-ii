@@ -49,7 +49,7 @@ const ControlsNode = ({data}) => {
     const itemFontSize = 13
 
     return <Stack style={{
-        backgroundColor: 'black',
+        backgroundColor: 'transparent',
         position: 'relative',
         width: '280px'
     }}>
@@ -523,9 +523,11 @@ export default function Contact({close}) {
         {id: 'n1', position: {x: 1200, y: 100}, type: 'contacts', data: {}},
         {id: 'n2', position: {x: 510, y: 600}, type: 'story', data: {}},
         {id: 'n3', position: {x: 240, y: 130}, type: 'services', data: {}},
-        {id: 'n0', position: {x: 1180, y: 450}, type: 'controls', data: {
-            onClick: close
-        }},
+        {
+            id: 'n0', position: {x: 1180, y: 450}, type: 'controls', data: {
+                onClick: close
+            }
+        },
     ])
 
     const [edges, setEdges] = useState([
