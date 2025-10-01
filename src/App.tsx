@@ -6,6 +6,7 @@ import {DeviceType, SystemState} from "./enum/system_state.ts";
 import ErrorLayout from "./layouts/error/error.layout.tsx";
 import HomeLayout from "./layouts/home/home.layout.tsx";
 import VisionLayout from "./layouts/vision/vision.layout.tsx";
+import PlaygroundLayout from "./layouts/playground/playground.tsx";
 
 interface RouteData {
     name: string;
@@ -21,13 +22,18 @@ const routes: RouteData[] = [
     },
     {
         name: "home",
-        path: "/",
+        path: "/index",
         element: <HomeLayout/>
     },
     {
         name: "memories",
         path: "/memories",
         element: <MemoriesLayout/>
+    },
+    {
+        name: "playground",
+        path: "/playground",
+        element: <PlaygroundLayout/>
     },
     {
         name: "vision",

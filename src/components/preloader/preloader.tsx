@@ -7,7 +7,7 @@ export const Preloader: FC = () => {
     return (
         <>
             <div
-                id={PreloaderIds.container}
+                id={PreloaderIds.container_top}
                 style={{
                     position: "fixed",
                     left: 0,
@@ -21,7 +21,7 @@ export const Preloader: FC = () => {
                 }}
             ></div>
             <div
-                id={PreloaderIds.container2}
+                id={PreloaderIds.container_bottom}
                 style={{
                     position: "fixed",
                     left: 0,

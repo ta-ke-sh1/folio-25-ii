@@ -1,6 +1,8 @@
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const textShuffleLight = (sourceElement: any, content: string, interval: any, duration: number) => {
     if (sourceElement.isAnimating) return;
+    if(!content) return;
+
     sourceElement.isAnimating = true
     let iteration = 1;
     const letters = ['!', '*', '_', '+', ';', ':', '<', '>'];

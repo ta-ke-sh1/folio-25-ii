@@ -1,8 +1,8 @@
-import {ContainerBase} from "../../components/containers/container.base.tsx";
 import {useEffect} from "react";
 import {PreloaderOnEnter} from "../../animations/preloader/preloader.ts";
+import {ContainerBase} from "../../components/containers/container.base.tsx";
 
-export default function ErrorLayout() {
+export default function PlaygroundLayout() {
 
     useEffect(() => {
         setTimeout(() => {
@@ -10,9 +10,9 @@ export default function ErrorLayout() {
         }, 1000);
     }, []);
 
+    {/*Main stack item*/}
     return (
         <ContainerBase>
-
         </ContainerBase>
-    )
+    );
 }

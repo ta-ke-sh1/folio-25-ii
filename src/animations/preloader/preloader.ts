@@ -1,15 +1,20 @@
 import gsap from "gsap";
-import {PreloaderIds} from "../../enum/element_ids.ts";
+import {NavTitleIds, PreloaderIds} from "../../enum/element_ids.ts";
+import {textShuffleLight} from "../text/shuffle.ts";
 
-export function initPreloader() {
-}
-
-export function PreloaderOnFirstEntrance() {
-    const container = document.getElementById(PreloaderIds.container)!;
-    const container_2 = document.getElementById(PreloaderIds.container2)!;
+export function PreloaderOnEnter() {
+    const container = document.getElementById(PreloaderIds.container_top)!;
+    const container_2 = document.getElementById(PreloaderIds.container_bottom)!;
     const tl = gsap.timeline();
 
+    const nameTitle = document.getElementById(NavTitleIds.name)!
+    const folioTitle = document.getElementById(NavTitleIds.folio)!
+
+    textShuffleLight(nameTitle, "TRUNG. HA", null, 80);
+    textShuffleLight(folioTitle, "folio .25", null, 80);
+
     tl.to(container, {
+        delay: 0.3,
         y: "-100%",
         duration: 1.5,
         ease: "power2.out",
@@ -24,27 +29,20 @@ export function PreloaderOnFirstEntrance() {
     );
 }
 
-export function PreloaderOnEnter() {
-    const container = document.getElementById(PreloaderIds.container)!;
-    const tl = gsap.timeline();
-
-    tl.to(container, {
-        filter: "blur(100px)",
-        duration: 1.5,
-        ease: "power2.out",
-    }).to(container, {
-        y: "-100%",
-        duration: 0,
-    });
-}
-
 export function PreloaderOnExit() {
-    const container = document.getElementById(PreloaderIds.container)!;
-    const container_2 = document.getElementById(PreloaderIds.container2)!;
+    const container = document.getElementById(PreloaderIds.container_top)!;
+    const container_2 = document.getElementById(PreloaderIds.container_bottom)!;
 
     const tl = gsap.timeline();
 
+    const nameTitle = document.getElementById(NavTitleIds.name)!
+    const folioTitle = document.getElementById(NavTitleIds.folio)!
+
+    textShuffleLight(nameTitle, "loading", null, 80);
+    textShuffleLight(folioTitle, "loading", null, 80);
+
     tl.to(container, {
+        delay: 0.3,
         y: "0%",
         duration: 1.5,
         ease: "power2.out",

@@ -6,7 +6,8 @@ import {HomepageItem, InfiniteScrollItem} from "../../components/containers/infi
 import {mainColors} from "../../enum/colors.ts";
 import {useMediaQuery} from "@mantine/hooks";
 import {useEffect} from "react";
-import {PreloaderOnFirstEntrance} from "../../animations/preloader/preloader.ts";
+import {PreloaderOnEnter} from "../../animations/preloader/preloader.ts";
+import {ContainerBase} from "../../components/containers/container.base.tsx";
 
 export default function HomeLayout() {
     const isMobile = useMediaQuery("(max-width: 768px)");
@@ -56,19 +57,12 @@ export default function HomeLayout() {
 
     useEffect(() => {
         setTimeout(() => {
-            PreloaderOnFirstEntrance();
+            PreloaderOnEnter();
         }, 1000);
     }, [])
 
     return (
-        <Stack
-            style={{
-                position: "relative",
-                width: "100dvw",
-                height: "100dvh",
-                overflow: "hidden",
-            }}
-        >
+        <ContainerBase>
             {/*Hero text*/}
             <Group
                 pr={"md"}
@@ -86,17 +80,6 @@ export default function HomeLayout() {
             >
                 <Grid style={{width: "100%"}}>
                     <Grid.Col span={{base: 12, sm: 3}}>
-                        <Stack justify="center" style={{height: "100%"}}>
-                            <Text
-                                style={{
-                                    textAlign: isMobile ? "center" : "start",
-                                    color: "white",
-                                    fontSize: 14,
-                                }}
-                            >
-                                TRUNG. HA
-                            </Text>
-                        </Stack>
                     </Grid.Col>
                     <Grid.Col span={{base: 12, sm: 6}}>
                         <Stack gap={0} style={{height: "100%"}}>
@@ -130,17 +113,6 @@ export default function HomeLayout() {
                         </Stack>
                     </Grid.Col>
                     <Grid.Col span={{base: 12, sm: 3}}>
-                        <Stack justify="center" style={{height: "100%"}}>
-                            <Text
-                                style={{
-                                    textAlign: isMobile ? "center" : "end",
-                                    color: "white",
-                                    fontSize: 14,
-                                }}
-                            >
-                                folio .25
-                            </Text>
-                        </Stack>
                     </Grid.Col>
                 </Grid>
             </Group>
@@ -187,6 +159,6 @@ export default function HomeLayout() {
                     />
                 </div>
             </div>
-        </Stack>
+        </ContainerBase>
     );
 }

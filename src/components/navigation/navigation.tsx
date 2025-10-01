@@ -1,4 +1,4 @@
-import {Group, Text} from "@mantine/core";
+import {Group, Text, Stack} from "@mantine/core";
 import {useEffect, useRef, useState} from "react";
 import {useSystemStore} from "../../hooks/system_state.ts";
 import {DeviceType} from "../../enum/system_state.ts";
@@ -7,11 +7,14 @@ import gsap from "gsap";
 import {ZIndexLevel} from "../../enum/sizing.ts";
 import {XMarkSVG} from "../icons/icons.tsx";
 import Contact from "../../layouts/contact/contact.layout.tsx";
-import {PreloaderIds} from "../../enum/element_ids.ts";
-import {useNavigate} from "react-router";
+import {NavTitleIds, PreloaderIds} from "../../enum/element_ids.ts";
+import {useLocation, useNavigate} from "react-router";
 import {PreloaderOnExit} from "../../animations/preloader/preloader.ts";
+import {textShuffleLight} from "../../animations/text/shuffle.ts";
 
 export default function Navigation() {
+
+    const location = useLocation();
 
     const navigate = useNavigate()
 
@@ -25,6 +28,7 @@ export default function Navigation() {
 
     const [time, setTime] = useState<string>("");
 
+    // Init event for clock
     useEffect(() => {
         const updateClock = () => {
             const now = new Date();
@@ -45,6 +49,17 @@ export default function Navigation() {
         const timer = setInterval(updateClock, 1000);
 
         return () => clearInterval(timer);
+    }, []);
+
+    // Init event for logo rotation
+    useEffect(() => {
+        gsap.to(logoRef.current, {
+            repeat: -1,
+            rotation: "360",
+            duration: 10,
+            ease: "linear",
+            transformOrigin: "center center",
+        });
     }, []);
 
     function handleMenu() {
@@ -69,22 +84,33 @@ export default function Navigation() {
         }
     }
 
-    useEffect(() => {
-        gsap.to(logoRef.current, {
-            repeat: -1,
-            rotation: "360",
-            duration: 10,
-            ease: "linear",
-            transformOrigin: "center center",
-        });
-    }, []);
-
     function handleNavigate(href: string) {
+        const isCurrentPage = location.pathname.includes(href)
+        if (isCurrentPage) return
         PreloaderOnExit();
         setTimeout(() => {
             navigate(href)
         }, 2000)
     }
+
+    const locations = [
+        {
+            title: "/index",
+            url: "/index",
+        },
+        {
+            title: "/memories",
+            url: "/memories",
+        },
+        {
+            title: "/playground",
+            url: "/playground",
+        },
+    ]
+
+    const itemPadding = '2px 5px'
+
+    const itemFontSize = 13
 
     return (
         <>
@@ -103,6 +129,37 @@ export default function Navigation() {
                 height={"100px"}
                 width={"100px"}
             />
+            <Group pr={'md'} pl={'md'} justify={'space-between'} style={{
+                position: "fixed",
+                zIndex: ZIndexLevel.high + 3,
+                top: "50%",
+                left: 0,
+                width: '100dvw',
+                transform: "translateY(-50%)",
+            }}>
+                <Stack justify="center" style={{height: "100%"}}>
+                    <Text
+                        id={NavTitleIds.name}
+                        style={{
+                            textAlign: "start",
+                            color: "white",
+                            fontSize: 14,
+                        }}
+                    >
+                    </Text>
+                </Stack>
+                <Stack justify="center" style={{height: "100%"}}>
+                    <Text
+                        id={NavTitleIds.folio}
+                        style={{
+                            textAlign: "end",
+                            color: "white",
+                            fontSize: 14,
+                        }}
+                    >
+                    </Text>
+                </Stack>
+            </Group>
             <div
                 style={{
                     position: "fixed",
@@ -113,39 +170,31 @@ export default function Navigation() {
                 }}
             >
                 <Group>
-                    <Text
-                        onClick={() => handleNavigate("/")}
-                        style={{
-                            fontSize: 14,
-                            textDecoration: "underline",
-                            color: "white",
-                            cursor: "pointer",
-                        }}
-                    >
-                        /index
-                    </Text>
-                    <Text
-                        onClick={() => handleNavigate("/memories")}
-                        style={{
-                            fontSize: 14,
-                            textDecoration: "underline",
-                            color: "white",
-                            cursor: "pointer",
-                        }}
-                    >
-                        /memories
-                    </Text>
-                    <Text
-                        onClick={() => handleNavigate("/playground")}
-                        style={{
-                            fontSize: 14,
-                            textDecoration: "underline",
-                            color: "white",
-                            cursor: "pointer",
-                        }}
-                    >
-                        /playground
-                    </Text>
+                    {
+                        locations.map((locationItem, index) => {
+                            const isCurrentPage = location.pathname.includes(locationItem.url)
+                            return <div key={`nav-item-${index}-${locationItem.title}`} style={{
+                                width: '120px',
+                                padding: itemPadding,
+                                backgroundColor: isCurrentPage ? 'transparent' : 'white',
+                                border: isCurrentPage ? '1px solid white' : 'none'
+                            }}>
+                                <Text
+                                    id={`nav-item-${index}-${locationItem.title}`}
+                                    onMouseEnter={(e) => {
+                                        textShuffleLight(e.currentTarget, locationItem.title, null, 50);
+                                    }}
+                                    onClick={() => handleNavigate(locationItem.url)}
+                                    style={{
+                                        fontSize: itemFontSize,
+                                        color: isCurrentPage ? 'white' : 'black',
+                                        cursor: "pointer",
+                                    }}
+                                >
+                                    {locationItem.title}
+                                </Text></div>
+                        })
+                    }
                 </Group>
             </div>
             {opened ? (
@@ -166,17 +215,24 @@ export default function Navigation() {
                     onClick={handleMenu}
                     style={{
                         position: "fixed",
+                        padding: itemPadding,
                         top: "13px",
                         right: "20px",
                         userSelect: "none",
+                        width: '100px',
+                        textAlign: 'start',
                         zIndex: ZIndexLevel.high + 1,
+                        backgroundColor: 'white',
                     }}
                 >
                     <Text
+                        onMouseEnter={(e) => {
+                            textShuffleLight(e.currentTarget, "/info", null, 50);
+                        }}
                         style={{
-                            fontSize: 14,
-                            textDecoration: "underline",
-                            color: "white",
+                            fontSize: itemFontSize,
+                            textDecoration: "none",
+                            color: "black",
                             cursor: "pointer",
                         }}
                     >
@@ -184,7 +240,6 @@ export default function Navigation() {
                     </Text>
                 </div>
             )}
-
             <div
                 onMouseEnter={handleMouseEnterNav}
                 style={{
@@ -229,16 +284,25 @@ export default function Navigation() {
                 >
                     {deviceType === DeviceType.DESKTOP ? (
                         <>
-                            {" "}
-                            <Text style={{color: "white", fontSize: 14}}>HAN0I, VIETNAM</Text>
-                            <Text style={{color: "white", fontSize: 14}}>{time}</Text>
+                            <div style={{
+                                backgroundColor: 'white',
+                                padding: itemPadding,
+                            }}>
+                                <Text style={{color: "black", fontSize: itemFontSize}}>HAN0I, VIETNAM</Text>
+                            </div>
+                            <div style={{
+                                backgroundColor: 'white',
+                                padding: itemPadding
+                            }}>
+                                <Text style={{color: "black", fontSize: itemFontSize}}>{time}</Text>
+                            </div>
                         </>
                     ) : (
                         <></>
                     )}
                 </Group>
             </div>
-            {opened && <Contact/>}
+            {opened && <Contact close={toggle}/>}
         </>
     );
 }
