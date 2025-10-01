@@ -1,7 +1,7 @@
 import {useEffect} from "react";
 import {PreloaderOnEnter} from "../../animations/preloader/preloader.ts";
 import {ContainerBase} from "../../components/containers/container.base.tsx";
-import {Card, Grid} from "@mantine/core";
+import {Card, Grid, type MantineStyleProp} from "@mantine/core";
 
 export default function PlaygroundLayout() {
 
@@ -15,7 +15,7 @@ export default function PlaygroundLayout() {
         height: '50dvh',
     }
 
-    const cardStyle = {
+    const cardStyle: MantineStyleProp = {
         position: 'relative',
         height: '100%',
         width: '100%',
